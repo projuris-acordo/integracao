@@ -1,14 +1,18 @@
 # Integração JUSTTO - Importação de novos processos
 #
-##Importação
+## Importação
 A importação de novos processos no sistema JUSTTO pode ocorrer de duas maneiras. Por API ou envio de mensagens JMS.
 Nas duas abordagens, o conteúdo utilizado é o mesmo. Um JSON com os processos.
 
-##Postman
+A representação do domínio de payload das APIs estão disponíveis no diagrama de classe: 
+
+![Diagrama de classe de payloads da API de integração](INTEGRA%C3%87%C3%83O-Proposta%20Padr%C3%A3o.png?raw=true "Classes do payload")
+
+## Postman
 As APIs disponíveis para realizar a importação e consultas de disputas estão disponíveis publicamente no endereço https://documenter.getpostman.com/view/5391983/SzKPW1rv
 
 
-##Configurações do servidor JMS
+## Configurações do servidor JMS
 - **Provedor JMS:** [ActiveMQ na versão 5.15.9](http://activemq.apache.org/activemq-5159-release.html "ActiveMQ na versão 5.15.9")
 - **Tipo de destino para importação:** fila (queue)
 - **URL de conexão:** `tcp://activemq.justto.com.br:61616` ver parâmetros adicionais de configurações da conexão direto [na documentação do ActiveMQ](https://activemq.apache.org/connection-configuration-uri "na documentação do ActiveMQ")
@@ -16,7 +20,7 @@ As APIs disponíveis para realizar a importação e consultas de disputas estão
 - **Senha de acesso:** ````
 - **Fila para envio do LoteProcessoDTO:** `importacao-lote-processo-prod`
 
-##Ambiente HTTP para acesso a API
+## Ambiente HTTP para acesso a API
 API para salvar o lote de processos: POST `https://justto.app/api/justto-import`
 
 ## Autenticação na API
