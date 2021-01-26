@@ -11,7 +11,6 @@ A representação do domínio de payload das APIs estão disponíveis no diagram
 ## Postman
 As APIs disponíveis para realizar a importação e consultas de disputas estão disponíveis publicamente no endereço https://documenter.getpostman.com/view/5391983/SzKPW1rv
 
-
 ## Configurações do servidor JMS
 - **Provedor JMS:** [ActiveMQ na versão 5.15.9](http://activemq.apache.org/activemq-5159-release.html "ActiveMQ na versão 5.15.9")
 - **Tipo de destino para importação:** fila (queue)
