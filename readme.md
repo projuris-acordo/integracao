@@ -172,7 +172,7 @@ Note que o Authorization é o token Bearer obtido no login (passo 1) e a Workspa
 No caso de requisições não HTTP (ex: filas), a única maneira de saber a qual workspace pertence os processos do lote é atraves desta informação.
 
 
-##Filtrando disputas cadastradas na workspace
+## Filtrando disputas cadastradas na workspace
 URL: GET https://justto.app/api/disputes/filter
 
 ### Filtros disponíveis
@@ -311,7 +311,7 @@ Também lista qualquer contraproposta realizada nos sistemas da JUSTTO.
 URL: https://justto.app/api/disputes/{dispute-id}/occurrences/type/INTERACTION?size=20&sort=createdAt,desc&sort=id,desc
 
 
-##Documentação dos tipos de dados e suas obrigatoriedades
+## Documentação dos tipos de dados e suas obrigatoriedades
 Documenta os tipos de dados e suas respectivas funções. Estes "Domain Transfer Objects" estão representados no diagrama do arquivo "INTEGRAÇÃO-Proposta Padrão.png"
 
 ### LoteProcessoDTO
