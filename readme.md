@@ -4,7 +4,7 @@
 A importação de novos processos no sistema JUSTTO pode ocorrer de duas maneiras. Por API ou envio de mensagens JMS.
 Nas duas abordagens, o conteúdo utilizado é o mesmo. Um JSON com os processos.
 
-A representação do domínio de payload das APIs estão disponíveis no diagrama de classe: 
+A representação do domínio de payload das APIs estão disponíveis no diagrama de classe:
 
 ![Diagrama de classe de payloads da API de integração](INTEGRA%C3%87%C3%83O-Proposta%20Padr%C3%A3o.png?raw=true "Classes do payload")
 
@@ -123,7 +123,7 @@ Exemplo de retorno:
                     "id": 1021,
                     "personId": null,
                     "name": "Teste Sprint 17",
-                    "document": "36866231884",
+                    "document": "CPF",
                     "email": "lucas@justto.com.br",
                     "number": "8901",
                     "agency": "0987",
@@ -141,7 +141,6 @@ Exemplo de retorno:
         "workspace": {
             "id": 110,
             "subDomain": "lucasisrael",
-            "whatsappNumber": "5512988261043",
             "name": "JUSTTO Advogados",
             "teamName": "Equipe JUSTTO",
             "status": "READY",
@@ -171,6 +170,115 @@ Exemplo de retorno:
 Para cada objeto retornado, é um acesso em uma workspace que o usuário possui.
 O nome da Workspace (já conhecido pelo usuário da JUSTTO. O que aparece para selecionar quando faz o  login), é o atributo `workspace.teamName`
 Na API, para identificar uma workspace, o que precisa ser enviado é `workspace.subDomain`
+
+
+### Listando usuários da workspaces
+Permite listar todos os usuários de uma workspace.
+
+Documentação no POSTMAN: https://documenter.getpostman.com/view/5391983/SzKPW1rv#172ea14c-6bbe-4c8a-8303-6df7a6177197
+
+Endereo para obter lista de usuários:
+API `GET https://justto.app/api/workspaces/members/vm`
+
+Header HTTP:`Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.qdGkiOiIyOTQiLCJzdWIiOiJsdWNhc0BqdXN0dG8uY29tLmJyIiwiUEVSU09OU19JRFNfS0VZIjoiMzk0MTEsOTE3MzgsMTA4MDY3LDEyMTE2OCIsImV4cCI6MTU4MTUxOTQ1MX0.0whyvARSlRFblH2-Vege70EGOmEdKFHNMIYbvSF8FHi4t-4_ndT9xB_iSHsOvnb79QEZ3-HGat5y0_`
+
+Header HTTP: `Workspace: c7082f65f08c475f9dd69b3eeaec6f3b`
+
+Note que o Authorization é o token Bearer obtido no login (passo 1) e a Workspace é o atributo `workspace.subDomain` da workspace selecionada para uso.
+
+O retorno é um payload listando os membros da da equipe e seus respectivos papeis na equipe.
+
+**Note** que esta API é paginada. Se não enviar o tamanho da paginação, o padrão será 20 itens por páginas.
+Para carregar todos de uma única vez, utilize o parâmetro `?size=999` na URL. Exemplo: `GET https://justto.app/api/workspaces/members/vm?size=999`
+
+Exemplo de retorno:
+```json
+{
+    "content": [
+        {
+            "id": 4297,
+            "person": {
+                "id": 683287,
+                "name": "Deivid Barbosa",
+                "type": "NATURAL",
+                "documentNumber": "CPF",
+                "emails": [
+                    {
+                        "id": 679104,
+                        "source": "CLIENT",
+                        "address": "deivid@justto.com.br"
+                    }
+                ],
+                "phones": [],
+                "oabs": [],
+                "bankAccounts": [],
+                "alerts": [],
+                "properties": {}
+            },
+            "workspace": {
+                "id": 583,
+                "keyAccountId": 294,
+                "subDomain": "1f0446fcd90a43859e780e812025df5a"
+            },
+            "profile": "ADMINISTRATOR",
+            "accountEmail": "deivid@justto.com.br"
+        },
+        {
+            "id": 4300,
+            "person": {
+                "id": 683325,
+                "name": "Lucas Israel GMAIL",
+                "type": "NATURAL",
+                "documentNumber": "CPF",
+                "emails": [
+                    {
+                        "id": 679240,
+                        "source": "CLIENT",
+                        "address": "emaildolucas@gmail.com"
+                    }
+                ],
+                "phones": [],
+                "oabs": [],
+                "bankAccounts": [],
+                "alerts": [],
+                "properties": {}
+            },
+            "workspace": {
+                "id": 583,
+                "keyAccountId": 294,
+                "subDomain": "1f0446fcd90a43859e780e812025df5a"
+            },
+            "profile": "NEGOTIATOR",
+            "accountEmail": "emaildolucas@gmail.com"
+        }
+    ],
+    "pageable": {
+        "sort": {
+            "sorted": false,
+            "unsorted": true,
+            "empty": true
+        },
+        "offset": 0,
+        "pageNumber": 0,
+        "pageSize": 20,
+        "unpaged": false,
+        "paged": true
+    },
+    "last": true,
+    "totalPages": 1,
+    "totalElements": 4,
+    "size": 20,
+    "number": 0,
+    "sort": {
+        "sorted": false,
+        "unsorted": true,
+        "empty": true
+    },
+    "first": true,
+    "numberOfElements": 4,
+    "empty": false
+}
+```
 
 
 ### Obtendo lista  de estratégias da workspace
