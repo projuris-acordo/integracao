@@ -54,7 +54,10 @@ Um usuário pode participar de várias workspaces, antes de interagir, precisa d
 Todas as ações são realizadas  dentro de uma workspace.
 Para listar as workspaces do usuário:
 
-API: `GET https://justto.app/api/workspaces/my`
+API: `GET https://justto.app/api/workspaces/my?loadStrategy=[true|false]`
+
+Parâmetros opcionais:
+1 - loadStrategy: Se true, carrega a lista de estratégias disponíveis na workspace
 
 Header HTTP: `Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.qdGkiOiIyOTQiLCJzdWIiOiJsdWNhc0BqdXN0dG8uY29tLmJyIiwiUEVSU09OU19JRFNfS0VZIjoiMzk0MTEsOTE3MzgsMTA4MDY3LDEyMTE2OCIsImV4cCI6MTU4MTUxOTQ1MX0.0whyvARSlRFblH2-Vege70EGOmEdKFHNMIYbvSF8FHi4t-4_ndT9xB_iSHsOvnb79QEZ3-HGat5y0_`
 
@@ -144,7 +147,23 @@ Exemplo de retorno:
             "status": "READY",
             "type": "LAW_FIRM"
         },
-        "profile": "ADMINISTRATOR"
+        "profile": "ADMINISTRATOR",
+        "strategys": [{
+            "id": 30,
+            "name": "INDENIZATÓRIA SEM OFERTA DE VALOR",
+            "types": [
+              "PAYMENT"
+            ],
+            "triggerType": "ENGAGEMENT"
+        },
+        {
+            "id": 19,
+            "name": "INDENIZATÓRIO - (JEC, CÍVEL)",
+            "types": [
+              "PAYMENT"
+            ],
+            "triggerType": "ENGAGEMENT"
+        }]
     }
 ]
 ```
