@@ -450,6 +450,7 @@ Representa um lote de processos
 |alcadaMaxima|Sim|Inteiro (valor máximo: 2147483647)|O valor da alçada máxima que será aplicada para todos os processos do lote que não tenha especificado individualmente este atributo. Este valor é dado em centavos de reais. ex: R$ 2,43 => deve ser representado como 243|
 |documentoUsuario|Sim|Alfanumérico (20)|O CPF/CNPJ do usuário que está solicitando a criação/envio do lote de processos para ser negociado|
 |emailUsuario|Sim|Alfanumérico (150)|O email principal do usuário que está solicitando a criação/envio do lote de processos para ser negociado. Este email será utilizado para identificar o usuário no Sistema JUSTTO|
+|accountEmails|Não|Array de String|Lista de emails a serem distribuidos o lote de disputas
 |nomeUsuario|Sim|Alfanumérico (250)|O nome do usuário que está solicitando a criação/envio do lote de processos para ser negociado. Utilizar o subDomain da workspace para definir qual é a workspace que irá receber as disputas|
 |intimado|Sim|Alfanumérico (250)|O nome do intimado no processo|
 |documentoIntimado|Sim|Alfanumérico (250)|O documento CPF/CNPJ do intimado no processo|
