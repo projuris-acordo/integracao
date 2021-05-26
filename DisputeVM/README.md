@@ -42,7 +42,7 @@ Representa uma disputa
 |moralDamage|Não|Numérico|Valor em danos morais do processo judicial|
 |paused|Sim|Booleano|Se verdadeiro, indica que a disputa está pausada|
 |properties|Não|Mapa|Informações adicionais da disputa e processo|
-|provisionedValue|?|Numérico| ???
+|provisionedValue|?|Numérico| ??? Saldo aprovisionado
 |recalculateProposal|?|Booleano| ???
 |requestedValue|?|Numérico| ???
 |strategyId|Sim|Numérico|Indentificador interno da estratégia da disputa|
