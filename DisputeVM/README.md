@@ -10,7 +10,7 @@ Representa uma disputa
 |contactPartyWhenNoLawyer|Sim|Booleano|Indica quando deve contatar a parte caso não localize o advogado|
 |courtHearingDate|Não|Data hora|Data da audiência|
 |denySavingDeposit|Sim|Booleano|Não aceita deposito em conta poupança|
-|description|Sim|Texto alfanumérico|Código único da disputa, normalmente utilizado com o número do processo júridico|
+|description|Sim|Alfanumérico| ??? Descrição da disputa
 |disputeDealDate|Não|Data hora|Data em que o acordo foi aceito|
 |disputeDealValue|Não|Numérico|Valor do acordo|
 |denySavingDeposit|Sim|Booleano|Acordo não aceita deposito em conta Poupança|
