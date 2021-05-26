@@ -44,7 +44,7 @@ Representa uma disputa
 |properties|Não|Mapa|Informações adicionais da disputa e processo|
 |provisionedValue|?|Numérico| ??? Saldo aprovisionado
 |recalculateProposal|?|Booleano| ???
-|requestedValue|?|Numérico| ???
+|requestedValue|?|Numérico| ??? Valor requisitado
 |strategyId|Sim|Numérico|Indentificador interno da estratégia da disputa|
 |strategyName|Sim|Alfanumérico|Nome da estratégia da disputa|
 |tagsIds|Não|Lista numérica|Lista de IDs das etiquetas da disputa|
