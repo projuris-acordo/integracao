@@ -1,3 +1,6 @@
+### DisputeVM
+Representa uma disputa
+
 |**Atributo**|**Mandatório**|**Tipo**|**Descrição**|
 | ------------| ------------ | ------------ | ------------ |
 |archived|Sim|Booleano|Indica quando a disputa foi arquivada/removida|
@@ -47,3 +50,6 @@
 |tagsIds|Não|Lista numérica|Lista de IDs das etiquetas da disputa|
 |updateAt|Não|Data hora|Data hora da última atualização da disputa|
 |visualized|Sim|Booleano|Se falso, indica que existem interações não visualizadas na disputa pelo negociador|
+|phase|Sim|Alfabetico| ??? "Fase" da disputa 
+|signStatus|Não|Alfabetico|Indica o estado da minuta quando enviada para assinatura|
+|firstClaimantAlerts|Não|Alfabetico|Indica se existe homônimo (NAMESAKE) ou litigante de má fé (VEXATIOUS_PARTY) na disputa
