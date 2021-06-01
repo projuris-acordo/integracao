@@ -1,5 +1,7 @@
 # Integração JUSTTO - Importação de novos processos
-#
+
+> Se você estiver procurando a documentação do webhook, vá para a [documentação de webhook padrão](webhook-padrao/README.md).
+
 ## Importação
 A importação de novos processos no sistema JUSTTO pode ocorrer de duas maneiras. Por API ou envio de mensagens JMS.
 Nas duas abordagens, o conteúdo utilizado é o mesmo. Um JSON com os processos.
@@ -444,101 +446,101 @@ Documenta os tipos de dados e suas respectivas funções. Estes "Domain Transfer
 ### LoteProcessoDTO
 Representa um lote de processos
 
-|**Atributo**|**Mandatório**|**Tipo**|**Descrição**|
-| ------------| ------------ | ------------ | ------------ |
-|observacao|Não|Alfanumérico (100.000)|Campo texto livre para entrada de observações. As observações adicionadas neste campo, serão adicionadas como "NOTAS" da disputa dentro da plataforma JUSTTO|
-|alcadaMaxima|Sim|Inteiro (valor máximo: 2147483647)|O valor da alçada máxima que será aplicada para todos os processos do lote que não tenha especificado individualmente este atributo. Este valor é dado em centavos de reais. ex: R$ 2,43 => deve ser representado como 243|
-|documentoUsuario|Sim|Alfanumérico (20)|O CPF/CNPJ do usuário que está solicitando a criação/envio do lote de processos para ser negociado|
-|emailUsuario|Sim|Alfanumérico (150)|O email principal do usuário que está solicitando a criação/envio do lote de processos para ser negociado. Este email será utilizado para identificar o usuário no Sistema JUSTTO|
-|accountEmails|Não|Array de String|Lista de emails a serem distribuidos o lote de disputas
-|nomeUsuario|Sim|Alfanumérico (250)|O nome do usuário que está solicitando a criação/envio do lote de processos para ser negociado. Utilizar o subDomain da workspace para definir qual é a workspace que irá receber as disputas|
-|intimado|Sim|Alfanumérico (250)|O nome do intimado no processo|
-|documentoIntimado|Sim|Alfanumérico (250)|O documento CPF/CNPJ do intimado no processo|
-|processos|Sim|Array de ProcessoDTO| Lista contendo processos a serem enviados para a JUSTTO|
-|estrategia|Não|Numérico| ID da estratégia de engajamento utilizada na plataforma da JUSTTO|
-|campanha|Não|Alfanumérico| Nome da campanha que irá agrupar todos os processos do lote|
-|percentualPrimeiraProposta|Não|Inteiro (entre 0 e 100)|Representa o percentual da primeira proposta calculado a partir da alçada máxima. Somente aplicável aos casos onde não é informado o valor da primeira proposta. Quando não informado, o valor padrão é de 60%, ou seja, a primeira proposta irá com 60% do valor da alçada máxima definida|
+| **Atributo**               | **Mandatório** | **Tipo**                           | **Descrição**                                                                                                                                                                                                                                                                               |
+| -------------------------- | -------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| observacao                 | Não            | Alfanumérico (100.000)             | Campo texto livre para entrada de observações. As observações adicionadas neste campo, serão adicionadas como "NOTAS" da disputa dentro da plataforma JUSTTO                                                                                                                                |
+| alcadaMaxima               | Sim            | Inteiro (valor máximo: 2147483647) | O valor da alçada máxima que será aplicada para todos os processos do lote que não tenha especificado individualmente este atributo. Este valor é dado em centavos de reais. ex: R$ 2,43 => deve ser representado como 243                                                                  |
+| documentoUsuario           | Sim            | Alfanumérico (20)                  | O CPF/CNPJ do usuário que está solicitando a criação/envio do lote de processos para ser negociado                                                                                                                                                                                          |
+| emailUsuario               | Sim            | Alfanumérico (150)                 | O email principal do usuário que está solicitando a criação/envio do lote de processos para ser negociado. Este email será utilizado para identificar o usuário no Sistema JUSTTO                                                                                                           |
+| accountEmails              | Não            | Array de String                    | Lista de emails a serem distribuidos o lote de disputas                                                                                                                                                                                                                                     |
+| nomeUsuario                | Sim            | Alfanumérico (250)                 | O nome do usuário que está solicitando a criação/envio do lote de processos para ser negociado. Utilizar o subDomain da workspace para definir qual é a workspace que irá receber as disputas                                                                                               |
+| intimado                   | Sim            | Alfanumérico (250)                 | O nome do intimado no processo                                                                                                                                                                                                                                                              |
+| documentoIntimado          | Sim            | Alfanumérico (250)                 | O documento CPF/CNPJ do intimado no processo                                                                                                                                                                                                                                                |
+| processos                  | Sim            | Array de ProcessoDTO               | Lista contendo processos a serem enviados para a JUSTTO                                                                                                                                                                                                                                     |
+| estrategia                 | Não            | Numérico                           | ID da estratégia de engajamento utilizada na plataforma da JUSTTO                                                                                                                                                                                                                           |
+| campanha                   | Não            | Alfanumérico                       | Nome da campanha que irá agrupar todos os processos do lote                                                                                                                                                                                                                                 |
+| percentualPrimeiraProposta | Não            | Inteiro (entre 0 e 100)            | Representa o percentual da primeira proposta calculado a partir da alçada máxima. Somente aplicável aos casos onde não é informado o valor da primeira proposta. Quando não informado, o valor padrão é de 60%, ou seja, a primeira proposta irá com 60% do valor da alçada máxima definida |
 
 
 ### ConfiguracaoImportacao
 Representa as configurações de comportamento que o sistema deve respeitar para a importação do lote de processos
 
-|**Atributo**|**Mandatório**|**Tipo**|**Descrição**|
-| ------------| ------------ | ------------ | ------------ |
-|contactarAutorQuandoSemAdvogado|Não|boleano|Flag indicando se o sistema deve contactar o autor do processo quando não houver ou não encontrar o advogado representante do autor. Quando true, para os processos sem advogados constituídos, o sistema irá enviar mensagem para o autor. Padrão é false, ou seja, nunca contactar o autor do processo.|
-|contactarAutorQuandoAdvogadoSemDados|Não|boleano|Flag indicando se o sistema deve contactar o autor do processo quando o advogado representante do autor não possuir dados para ser contactado (telefone ou email). Quando true, para os processos que possuam advogados constituídos, mas o sistema não encontrar dados de contatos (email/telefone) do advogado, o sistema irá enviar mensagem para o autor. Padrão é false, ou seja, nunca contactar o autor do processo.|
-|agendarMsgHorarioComercial|Não|boleano|Flag indicando se o sistema irá enviar mensagens automáticas somente dentro do horário comercial. Padrão é false, ou seja, envia mensagens a qualquer horário (ex: madrugada ou final de semana)|
-|ignorarEnriquecimentoAutomatico|Não|boleano|Flag indicando se o sistema irá realizar enriquecimento do processo e de seus participantes. Padrão é false, ou seja, sistema irá enriquecer com o máximo de informações que puder|
-|naoPermiteContaPoupanca|Não|boleano|Flag indicando que os processos não devem permitir que o autor ou o advogado informem uma conta do tipo poupança para o depósito do valor do acordo, se houver acordo|
+| **Atributo**                         | **Mandatório** | **Tipo** | **Descrição**                                                                                                                                                                                                                                                                                                                                                                                                               |
+| ------------------------------------ | -------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| contactarAutorQuandoSemAdvogado      | Não            | boleano  | Flag indicando se o sistema deve contactar o autor do processo quando não houver ou não encontrar o advogado representante do autor. Quando true, para os processos sem advogados constituídos, o sistema irá enviar mensagem para o autor. Padrão é false, ou seja, nunca contactar o autor do processo.                                                                                                                   |
+| contactarAutorQuandoAdvogadoSemDados | Não            | boleano  | Flag indicando se o sistema deve contactar o autor do processo quando o advogado representante do autor não possuir dados para ser contactado (telefone ou email). Quando true, para os processos que possuam advogados constituídos, mas o sistema não encontrar dados de contatos (email/telefone) do advogado, o sistema irá enviar mensagem para o autor. Padrão é false, ou seja, nunca contactar o autor do processo. |
+| agendarMsgHorarioComercial           | Não            | boleano  | Flag indicando se o sistema irá enviar mensagens automáticas somente dentro do horário comercial. Padrão é false, ou seja, envia mensagens a qualquer horário (ex: madrugada ou final de semana)                                                                                                                                                                                                                            |
+| ignorarEnriquecimentoAutomatico      | Não            | boleano  | Flag indicando se o sistema irá realizar enriquecimento do processo e de seus participantes. Padrão é false, ou seja, sistema irá enriquecer com o máximo de informações que puder                                                                                                                                                                                                                                          |
+| naoPermiteContaPoupanca              | Não            | boleano  | Flag indicando que os processos não devem permitir que o autor ou o advogado informem uma conta do tipo poupança para o depósito do valor do acordo, se houver acordo                                                                                                                                                                                                                                                       |
 
 
 ### ProcessoDTO
 Representa um processo que será cadastrado no sistema JUSTTO como disputa a ser negociada com as partes.
 
-|**Atributo**|**Mandatório**|**Tipo**|**Descrição**|
-| ------------| ------------ | ------------ | ------------ |
-|numero|Sim|Alfanumérico (250)|Representa o número de identificação única do processo no TJ|
-|foro|Não|Alfanumérico (250)|Nome do foro do processo|
-|vara|Não|Alfanumérico (250)|Nome da vara do processo|
-|classe|Não|Alfanumérico (250)|A classe do processo|
-|valor|Sim|Numérico Real|Valor monetário da ação representada. Exemplo: R$ 1500,00 deve ser representado como 1500.00|
-|alcadaMaxima|Não|Numérico Real|Valor monetário da alçada máxima para negociação. Quando não informado este atributo, irá considerar o atributo alçada máxima do Lote. Exemplo: R$ 1500,00 deve ser representado como 1500.00|
-|assunto|Não|Alfanumérico (250)|Assunto do processo|
-|comptetencia|Não|Alfanumérico (250)|Comptência do processo|
-|partes|Sim|Array de ParteDTO|Lista contendo as partes do processo|
-|dataLimite|Não|Date|Objeto de data no formato "yyyy-MM-dd'T'HH:mm:ss'Z'" indicando a data limite de negociação|
-|codigoExterno|Não|Alfanumérico (50)|Representa a identificação do processo no sistema externo, para referências futuras|
-|observacao|Não|Alfanumérico (500)|Qualquer observação ou anotação que queira importar anexado no processo para ficar disponível para o negociador na plataforma|
-|primeiraProposta|Não|Numérico Real|Valor monetário da primeira proposta. Quando não informado este atributo, irá considerar o percentual da primeira proposta informado no lote de processos. Exemplo: R$ 1500,00 deve ser representado como 1500.00|
+| **Atributo**     | **Mandatório** | **Tipo**           | **Descrição**                                                                                                                                                                                                     |
+| ---------------- | -------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| numero           | Sim            | Alfanumérico (250) | Representa o número de identificação única do processo no TJ                                                                                                                                                      |
+| foro             | Não            | Alfanumérico (250) | Nome do foro do processo                                                                                                                                                                                          |
+| vara             | Não            | Alfanumérico (250) | Nome da vara do processo                                                                                                                                                                                          |
+| classe           | Não            | Alfanumérico (250) | A classe do processo                                                                                                                                                                                              |
+| valor            | Sim            | Numérico Real      | Valor monetário da ação representada. Exemplo: R$ 1500,00 deve ser representado como 1500.00                                                                                                                      |
+| alcadaMaxima     | Não            | Numérico Real      | Valor monetário da alçada máxima para negociação. Quando não informado este atributo, irá considerar o atributo alçada máxima do Lote. Exemplo: R$ 1500,00 deve ser representado como 1500.00                     |
+| assunto          | Não            | Alfanumérico (250) | Assunto do processo                                                                                                                                                                                               |
+| comptetencia     | Não            | Alfanumérico (250) | Comptência do processo                                                                                                                                                                                            |
+| partes           | Sim            | Array de ParteDTO  | Lista contendo as partes do processo                                                                                                                                                                              |
+| dataLimite       | Não            | Date               | Objeto de data no formato "yyyy-MM-dd'T'HH:mm:ss'Z'" indicando a data limite de negociação                                                                                                                        |
+| codigoExterno    | Não            | Alfanumérico (50)  | Representa a identificação do processo no sistema externo, para referências futuras                                                                                                                               |
+| observacao       | Não            | Alfanumérico (500) | Qualquer observação ou anotação que queira importar anexado no processo para ficar disponível para o negociador na plataforma                                                                                     |
+| primeiraProposta | Não            | Numérico Real      | Valor monetário da primeira proposta. Quando não informado este atributo, irá considerar o percentual da primeira proposta informado no lote de processos. Exemplo: R$ 1500,00 deve ser representado como 1500.00 |
 
 ### ParteDTO
 Representa o participante de uma disputa que será cadastrado no sistema JUSTTO.
 
-|**Atributo**|**Mandatório**|**Tipo**|**Descrição**|
-| ------------| ------------ | ------------ | ------------ |
-|nome|Não|Alfanumérico (250)|Nome completo da parte|
-|documentoFiscal|Sim|Alfanumérico (20)|CPF ou CNPJ da parte|
-|documentoCivil|Não|Alfanumérico (20)|RG da parte, quando disponível|
-|principal|Não - padrão é false|boolean (true/false)|Flag indicando se a parte é a principal para o tipo de participação no processo. Exemplo: No caso de processos com mais de um réu, precisamos ter certeza que o principal é a parte que está iniciando a negociação. Sempre que possível, iremos inferir com base no documentoFiscal comparando com o cnpj do LoteProcessoDTO|
-|emails|Não|Array de EmailDTO|Lista de emails os endereços de emails da parte|
-|tipo|Sim|TipoParticipacao|Enum informando o tipo de participação da parte no processo|
-|perfil|Sim|Perfil|Enum informando o perfil da parte no processo|
-|principal|Sim|Boolean|Flag inficando se é a parte principal para o tipo de participação informado|
-|enderecos|Não|Array de EnderecoDTO|Lista de enrereços da parte|
-|telefones|Não|Array de TelefoneDTO|Lista de telefones da parte|
+| **Atributo**    | **Mandatório**       | **Tipo**             | **Descrição**                                                                                                                                                                                                                                                                                                                 |
+| --------------- | -------------------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| nome            | Não                  | Alfanumérico (250)   | Nome completo da parte                                                                                                                                                                                                                                                                                                        |
+| documentoFiscal | Sim                  | Alfanumérico (20)    | CPF ou CNPJ da parte                                                                                                                                                                                                                                                                                                          |
+| documentoCivil  | Não                  | Alfanumérico (20)    | RG da parte, quando disponível                                                                                                                                                                                                                                                                                                |
+| principal       | Não - padrão é false | boolean (true/false) | Flag indicando se a parte é a principal para o tipo de participação no processo. Exemplo: No caso de processos com mais de um réu, precisamos ter certeza que o principal é a parte que está iniciando a negociação. Sempre que possível, iremos inferir com base no documentoFiscal comparando com o cnpj do LoteProcessoDTO |
+| emails          | Não                  | Array de EmailDTO    | Lista de emails os endereços de emails da parte                                                                                                                                                                                                                                                                               |
+| tipo            | Sim                  | TipoParticipacao     | Enum informando o tipo de participação da parte no processo                                                                                                                                                                                                                                                                   |
+| perfil          | Sim                  | Perfil               | Enum informando o perfil da parte no processo                                                                                                                                                                                                                                                                                 |
+| principal       | Sim                  | Boolean              | Flag inficando se é a parte principal para o tipo de participação informado                                                                                                                                                                                                                                                   |
+| enderecos       | Não                  | Array de EnderecoDTO | Lista de enrereços da parte                                                                                                                                                                                                                                                                                                   |
+| telefones       | Não                  | Array de TelefoneDTO | Lista de telefones da parte                                                                                                                                                                                                                                                                                                   |
 
 
 
 ### EmailDTO
 Representa um email. Este objeto foi criado apartado para permitir que associemos mais atributos, como a fonte de dados do email.
 
-|**Atributo**|**Mandatório**|**Tipo**|**Descrição**|
-| ------------| ------------ | ------------ | ------------ |
-|endereco|Sim|String (150)|O endereço de email válido. Deve ser apenas um email, não a lista de emails. Quando houver mais de um, criar várias instiancias do objeto EmailDTO com o respectivo endereço|
+| **Atributo** | **Mandatório** | **Tipo**     | **Descrição**                                                                                                                                                                |
+| ------------ | -------------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| endereco     | Sim            | String (150) | O endereço de email válido. Deve ser apenas um email, não a lista de emails. Quando houver mais de um, criar várias instiancias do objeto EmailDTO com o respectivo endereço |
 
 
 ### EnderecoDTO
 Representa um endereço físico da parte associada no processo.
 
-|**Atributo**|**Mandatório**|**Tipo**|**Descrição**|
-| ------------| ------------ | ------------ | ------------ |
-|logradouro|Não|Alfanumérico (250)|Logradouro do endereço da parte. Aqui utilizado para descrever o nome da rua,avenida, viela, etc...|
-|numero|Não|Alfanumérico (25)|Descreve o número ou o motivo de não ter número do endereço|
-|complemento|Não|Alfanumérico (250)|Descreve qualquer complemento que auxilie no endereço|
-|bairro|Não|Alfanumérico (250)|Nome do bairro do endereço|
-|cidade|Não|Alfanumérico (250)|Nome da cidade do endereço|
-|cep|Não|Alfanumérico (25)|CEP do endereço|
-|estado|Não|Estado|O estado (Unidade Federativa) do endereço|
-|tipo|Sim|TipoEndereco|Indicador do tipo de endereço|
+| **Atributo** | **Mandatório** | **Tipo**           | **Descrição**                                                                                       |
+| ------------ | -------------- | ------------------ | --------------------------------------------------------------------------------------------------- |
+| logradouro   | Não            | Alfanumérico (250) | Logradouro do endereço da parte. Aqui utilizado para descrever o nome da rua,avenida, viela, etc... |
+| numero       | Não            | Alfanumérico (25)  | Descreve o número ou o motivo de não ter número do endereço                                         |
+| complemento  | Não            | Alfanumérico (250) | Descreve qualquer complemento que auxilie no endereço                                               |
+| bairro       | Não            | Alfanumérico (250) | Nome do bairro do endereço                                                                          |
+| cidade       | Não            | Alfanumérico (250) | Nome da cidade do endereço                                                                          |
+| cep          | Não            | Alfanumérico (25)  | CEP do endereço                                                                                     |
+| estado       | Não            | Estado             | O estado (Unidade Federativa) do endereço                                                           |
+| tipo         | Sim            | TipoEndereco       | Indicador do tipo de endereço                                                                       |
 
 
 ### TelefoneDTO
 Representa o telefone da parte
 
-|**Atributo**|**Mandatório**|**Tipo**|**Descrição**|
-| ------------| ------------ | ------------ | ------------ |
-|numero|Sim|Alfanumérico (15)|Número do teleefone com o DDD. No caso de número internacional, incluir o código do país|
-|mobile|Não - padrão é false|booleano (true/false)|Flag indicando se o telefone é um número de telefone móvel. Fundamental para iniciarmos verificação do número com whatsapp ou com provedores SMS|
+| **Atributo** | **Mandatório**       | **Tipo**              | **Descrição**                                                                                                                                    |
+| ------------ | -------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| numero       | Sim                  | Alfanumérico (15)     | Número do teleefone com o DDD. No caso de número internacional, incluir o código do país                                                         |
+| mobile       | Não - padrão é false | booleano (true/false) | Flag indicando se o telefone é um número de telefone móvel. Fundamental para iniciarmos verificação do número com whatsapp ou com provedores SMS |
 
 
 
