@@ -400,4 +400,10 @@ Esta enum não documentaremos a descrição por ser semântico.
 | SE        |
 | TO        |
 
+### BankAccountType
+Enum representa o tipo de conta bancária.
+| **valor** | **Descrição**                                                                                                      |
+| --------- | ------------------------------------------------------------------------------------------------------------------ |
+| SAVINGS   | Indica que a conta bancária é do tipo Conta Poupança                                                               |
+| CHECKING  | Indica que a conta bancária é do tipo Conta Corrente                                                               |
 
