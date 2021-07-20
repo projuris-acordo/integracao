@@ -76,6 +76,7 @@ Representa uma disputa no sistema da JUSTTO
 | firstInteraction                  | Não            | [DisputeInteractionDto](#DisputeInteractionDto)     | A primeira interação da disputa                                                                                                                                                                                                                                                                                  |
 | lastInteraction                   | Não            | [DisputeInteractionDto](#DisputeInteractionDto)     | A última interação da disputa                                                                                                                                                                                                                                                                                    |
 | campaign                          | Sim            | [CampaignDto](#CampaignDto)                         | A campanha associada na disputa                                                                                                                                                                                                                                                                                  |
+| workspace                         | Sim            | [WorkspaceDto](#WorkspaceDto)                       | A workspace associada na disputa                                                                                                                                                                                                                                                                                  |
 
 
 ### DisputeConclusionDto
@@ -148,6 +149,18 @@ Representa a campanha da disputa
 | initialOfferPercentage        | Sim            | Numérico     | Indica o percentual da primeira proposta referente a alçada máxima                                                                                                                                                                                |
 | name                          | Sim            | Alfanumérico | Indica o da campanha                                                                                                                                                                                                                              |
 | skipEnrichment                | Sim            | Booleano     | Flag indica se quem importou solicitou que a JUSTTO enriqueça os dados automaticamente                                                                                                                                                            |
+
+
+### WorkspaceDto
+Representa a workspace da disputa
+| **Atributo**                  | **Mandatório** | **Tipo**     | **Descrição**                                                                                                                                                                                                                                     |
+| ----------------------------- | -------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| id                            | Sim            | Numérico     | Identificação única da interação no sistema da JUSTTO                                                                                                                                                                                             |
+| name                          | Sim            | Alfanumérico | Indica o nome da workspace                                                                                                                                                                                                                        |
+| teamName                      | Sim            | Alfanumérico | Indica o nome to time da workspace                                                                                                                                                                                                                |
+| subDomain                     | Sim            | Alfanumérico | Indica o código único para o domínio da workspace                                                                                                                                                                                                 |
+| status                        | Sim            | [WoskapceStatus](#WoskapceStatus) | Identifica status atual da workspace. Os valores deste enum estão documentados logo abaixo                                                                                                                                   |
+| createdAt                     | Sim            | Data hora    | Representa a data e hora que foi criado                                                                                                                                                                                                           |
 
 
 ### PhoneDto
@@ -407,3 +420,10 @@ Enum representa o tipo de conta bancária.
 | SAVINGS   | Indica que a conta bancária é do tipo Conta Poupança                                                               |
 | CHECKING  | Indica que a conta bancária é do tipo Conta Corrente                                                               |
 
+### WoskapceStatus
+Enum que representa o estado da Workspace
+| **valor** | **Descrição**                                                                                                      |
+| --------- | ------------------------------------------------------------------------------------------------------------------ |
+| CREATING  | Indica que a Workspace está sendo configurada                                                                      |
+| READY     | Indica que a Workspace está ativa                                                                                  |
+| DISABLED  | Indica que a Workspace está desativada                                                                             |
