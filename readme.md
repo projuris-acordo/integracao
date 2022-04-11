@@ -193,6 +193,9 @@ O retorno é um payload listando os membros da da equipe e seus respectivos pape
 **Note** que esta API é paginada. Se não enviar o tamanho da paginação, o padrão será 20 itens por páginas.
 Para carregar todos de uma única vez, utilize o parâmetro `?size=999` na URL. Exemplo: `GET https://api.justto.app/api/workspaces/members/vm?size=999`
 
+Para exibir os membros arquivados, utilize o parâmetro: showArchived=true
+Exemplo: `GET https://api.justto.app/api/workspaces/members/vm?showArchived=true`
+
 Exemplo de retorno:
 ```json
 {
@@ -251,7 +254,8 @@ Exemplo de retorno:
                 "subDomain": "1f0446fcd90a43859e780e812025df5a"
             },
             "profile": "NEGOTIATOR",
-            "accountEmail": "emaildolucas@gmail.com"
+            "accountEmail": "emaildolucas@gmail.com",
+            "archived": false
         }
     ],
     "pageable": {
