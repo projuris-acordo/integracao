@@ -11,10 +11,6 @@ A representação do domínio de payload das APIs estão disponíveis no diagram
 
 ![Diagrama de classe de payloads da API de integração](INTEGRA%C3%87%C3%83O-Proposta%20Padr%C3%A3o.png?raw=true "Classes do payload")
 
-## Postman
-
-As APIs disponíveis para realizar a importação e consultas de disputas estão disponíveis publicamente no endereço https://documenter.getpostman.com/view/5391983/SzKPW1rv
-
 ## Configurações do servidor JMS
 
 - **Provedor JMS:** [ActiveMQ na versão 5.15.9](http://activemq.apache.org/activemq-5159-release.html "ActiveMQ na versão 5.15.9")
@@ -182,8 +178,6 @@ Na API, para identificar uma workspace, o que precisa ser enviado é `workspace.
 ### Listando usuários da workspaces
 
 Permite listar todos os usuários de uma workspace.
-
-Documentação no POSTMAN: https://documenter.getpostman.com/view/5391983/SzKPW1rv#172ea14c-6bbe-4c8a-8303-6df7a6177197
 
 Endereo para obter lista de usuários:
 API `GET https://backend.justto.app/api/workspaces/members/vm`
