@@ -26,7 +26,7 @@ As APIs disponíveis para realizar a importação e consultas de disputas estão
 
 ## Ambiente HTTP para acesso a API
 
-API para salvar o lote de processos: POST `https://api.justto.app/api/justto-import`
+API para salvar o lote de processos: POST `https://backend.justto.app/api/justto-import`
 
 ## Autenticação na API
 
@@ -39,7 +39,7 @@ O processo consiste em 2 etapas:
 
 Para realizar o login, enviar usuário e senha para obter o token temporário.
 
-API: `POST https://api.justto.app/api/accounts/token`
+API: `POST https://backend.justto.app/api/accounts/token`
 
 Payload:
 
@@ -64,7 +64,7 @@ Um usuário pode participar de várias workspaces, antes de interagir, precisa d
 Todas as ações são realizadas dentro de uma workspace.
 Para listar as workspaces do usuário:
 
-API: `GET https://api.justto.app/api/workspaces/my?loadStrategy=[true|false]`
+API: `GET https://backend.justto.app/api/workspaces/my?loadStrategy=[true|false]`
 
 Parâmetros opcionais:
 1 - loadStrategy: Se true, carrega a lista de estratégias disponíveis na workspace
@@ -186,7 +186,7 @@ Permite listar todos os usuários de uma workspace.
 Documentação no POSTMAN: https://documenter.getpostman.com/view/5391983/SzKPW1rv#172ea14c-6bbe-4c8a-8303-6df7a6177197
 
 Endereo para obter lista de usuários:
-API `GET https://api.justto.app/api/workspaces/members/vm`
+API `GET https://backend.justto.app/api/workspaces/members/vm`
 
 Header HTTP:`Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.qdGkiOiIyOTQiLCJzdWIiOiJsdWNhc0BqdXN0dG8uY29tLmJyIiwiUEVSU09OU19JRFNfS0VZIjoiMzk0MTEsOTE3MzgsMTA4MDY3LDEyMTE2OCIsImV4cCI6MTU4MTUxOTQ1MX0.0whyvARSlRFblH2-Vege70EGOmEdKFHNMIYbvSF8FHi4t-4_ndT9xB_iSHsOvnb79QEZ3-HGat5y0_`
 
@@ -197,10 +197,10 @@ Note que o Authorization é o token Bearer obtido no login (passo 1) e a Workspa
 O retorno é um payload listando os membros da da equipe e seus respectivos papeis na equipe.
 
 **Note** que esta API é paginada. Se não enviar o tamanho da paginação, o padrão será 20 itens por páginas.
-Para carregar todos de uma única vez, utilize o parâmetro `?size=999` na URL. Exemplo: `GET https://api.justto.app/api/workspaces/members/vm?size=999`
+Para carregar todos de uma única vez, utilize o parâmetro `?size=999` na URL. Exemplo: `GET https://backend.justto.app/api/workspaces/members/vm?size=999`
 
 Para exibir os membros arquivados, utilize o parâmetro: showArchived=true
-Exemplo: `GET https://api.justto.app/api/workspaces/members/vm?showArchived=true`
+Exemplo: `GET https://backend.justto.app/api/workspaces/members/vm?showArchived=true`
 
 Exemplo de retorno:
 
@@ -300,7 +300,7 @@ Esta última, somente é visivel para a workspace que é sua proprietária.
 Para listar as estratégias padrões + da workspace, precisa estar autenticado.
 
 Endereço para obter lista de estratégias
-API: `GET https://api.justto.app/api/workspaces/strategies`
+API: `GET https://backend.justto.app/api/workspaces/strategies`
 
 Header HTTP: `Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.qdGkiOiIyOTQiLCJzdWIiOiJsdWNhc0BqdXN0dG8uY29tLmJyIiwiUEVSU09OU19JRFNfS0VZIjoiMzk0MTEsOTE3MzgsMTA4MDY3LDEyMTE2OCIsImV4cCI6MTU4MTUxOTQ1MX0.0whyvARSlRFblH2-Vege70EGOmEdKFHNMIYbvSF8FHi4t-4_ndT9xB_iSHsOvnb79QEZ3-HGat5y0_`
 
@@ -313,7 +313,7 @@ No caso de requisições não HTTP (ex: filas), a única maneira de saber a qual
 
 ## Filtrando disputas cadastradas na workspace
 
-URL: GET https://api.justto.app/api/disputes/filter
+URL: GET https://backend.justto.app/api/disputes/filter
 
 ### Filtros disponíveis
 
@@ -327,14 +327,14 @@ Todos os filtros são do tipo Query Params
   Exemplo: sort=id,desc&sort=favorite,desc
 
 Exemplo completo de uma URL válida para listar os primeiros 20 registros ordenando de forma decrescente pelo ID:
-https://api.justto.app/api/disputes/filter?page=0&size=20&sort=id,desc
+https://backend.justto.app/api/disputes/filter?page=0&size=20&sort=id,desc
 
 ### De negociadores
 
 É possível filtrar somente disputas que pertence a um determinado negociador. O parâmetro do filtro é o ID do negociador no sistema.
 
 Exemplo de URL buscando disputas do negociador com ID 1000
-https://api.justto.app/api/disputes/filter?persons=45442
+https://backend.justto.app/api/disputes/filter?persons=45442
 
 ### De prescrições do sistema (auxilio rápido ao que é importante)
 
@@ -346,14 +346,14 @@ Existem várias prescrições para filtro de disputas que auxiliam na tomada de 
 - ONLY_VISUALIZED -> Filtra disputas cuja parte contrára recebeu email e visualizou o email
 - UNSETTLED_WITH_MESSAGES -> Filtra disputas encerradas como PERDIDAS e que receberam novas mensagens após serem marcadas como PERDIDAS
 - PENDING -> Filtra disputas que estão PENDENTES. Que não foram possíveis encontrar dados para realizar o engajamento
-  Exemplo de URL: https://api.justto.app/api/disputes/filter?prescriptions=PENDING
+  Exemplo de URL: https://backend.justto.app/api/disputes/filter?prescriptions=PENDING
 
 ### De campanhas pelo nome
 
 Permite filtrar campanhas pelo nome das campanhas.
 Nome do parâmetro: campaigns
 Exemplo de URL:
-https://api.justto.app/api/disputes/filter?campaigns=SUBMARINO%20VIAGENS%20LTDA.&campaigns=SUBMARINO%2031.01.2020%20-
+https://backend.justto.app/api/disputes/filter?campaigns=SUBMARINO%20VIAGENS%20LTDA.&campaigns=SUBMARINO%2031.01.2020%20-
 
 Note que pode ser enviado mais de uma campanha
 
@@ -365,7 +365,7 @@ Intervalo de datas deve ser informado nos parâmetros iniciais e finais.
 expirationDateStart e expirationDateEnd
 Deve ser inviado no formato padrão de datas do sistema JUSTTO, que é em UTC, no formato "yyyy-MM-dd'T'HH:mm:ss'Z'"
 
-Exemplo de URL: https://api.justto.app/api/disputes/filter?expirationDateStart=2020-02-14T00:00:00Z&expirationDateEnd=2020-02-15T23:59:59Z
+Exemplo de URL: https://backend.justto.app/api/disputes/filter?expirationDateStart=2020-02-14T00:00:00Z&expirationDateEnd=2020-02-15T23:59:59Z
 
 ### Por data da importação da disputa
 
@@ -375,14 +375,14 @@ Intervalo de datas deve ser informado nos parâmetros iniciais e finais.
 importingDateStart e importingDateEnd
 Deve ser inviado no formato padrão de datas do sistema JUSTTO, que é em UTC, no formato "yyyy-MM-dd'T'HH:mm:ss'Z'"
 
-Exemplo de URL: https://api.justto.app/api/disputes/filter?importingDateStart=2020-02-14T00:00:00Z&importingDateEnd=2020-02-15T23:59:59Z
+Exemplo de URL: https://backend.justto.app/api/disputes/filter?importingDateStart=2020-02-14T00:00:00Z&importingDateEnd=2020-02-15T23:59:59Z
 
 ### Por status da disputa
 
 Permite filtrar pelo status atual da disputa.
 O nome do parâmetro é "status".
 
-Exemplo de URL: https://api.justto.app/api/disputes/filter?status=ENRICHED
+Exemplo de URL: https://backend.justto.app/api/disputes/filter?status=ENRICHED
 
 As disputas podem estar nos seguintes estados:
 
@@ -402,27 +402,27 @@ As disputas podem estar nos seguintes estados:
 
 Permite filtrar pelo nome do réu.
 O nome do parâmetro é "respondentNames".
-Exemplo de URL: https://api.justto.app/api/disputes/filter?status=ENRICHED&prescriptions=PENDING&page=0&size=20&sort=id,desc&sort=favorite,desc&respondentNames=AEROLINEAS%20ARGENTINAS%20SA
+Exemplo de URL: https://backend.justto.app/api/disputes/filter?status=ENRICHED&prescriptions=PENDING&page=0&size=20&sort=id,desc&sort=favorite,desc&respondentNames=AEROLINEAS%20ARGENTINAS%20SA
 
 ### Composição de filtros
 
 Todos os filtros podem ser utilizados em conjunto. Todos podem ser utilizados mais de uma vez.
-Exemplo de URL com mais de um filtro: https://api.justto.app/api/disputes/filter?status=ENRICHED&status=PENDING&status=IMPORTED&status=ENGAGEMENT&status=RUNNING&campaigns=SUBMARINO%20VIAGENS%20LTDA.&prescriptions=PENDING&page=0&size=20&sort=id,desc&sort=favorite,desc&respondentNames=AEROLINEAS%20ARGENTINAS%20SA&importingDateStart=2020-02-14T00:00:00Z&importingDateEnd=2020-02-14T23:59:59Z&
+Exemplo de URL com mais de um filtro: https://backend.justto.app/api/disputes/filter?status=ENRICHED&status=PENDING&status=IMPORTED&status=ENGAGEMENT&status=RUNNING&campaigns=SUBMARINO%20VIAGENS%20LTDA.&prescriptions=PENDING&page=0&size=20&sort=id,desc&sort=favorite,desc&respondentNames=AEROLINEAS%20ARGENTINAS%20SA&importingDateStart=2020-02-14T00:00:00Z&importingDateEnd=2020-02-14T23:59:59Z&
 
 ### Busca Global por termos
 
 Permite realizar uma busca por termo genérico, que pode ser o ID da disputa, número do processo, nomes das partes, etc.
-URL: GET https://api.justto.app/api/disputes/search?term=?
+URL: GET https://backend.justto.app/api/disputes/search?term=?
 Exemplos:
 
-- Por número de processos: https://api.justto.app/api/disputes/search?term=0002582-62.2020.8.17.8201
-- Por ID do processo: https://api.justto.app/api/disputes/search?term=24567
-- Por nome: https://api.justto.app/api/disputes/search?term=Lucas%20Israel
+- Por número de processos: https://backend.justto.app/api/disputes/search?term=0002582-62.2020.8.17.8201
+- Por ID do processo: https://backend.justto.app/api/disputes/search?term=24567
+- Por nome: https://backend.justto.app/api/disputes/search?term=Lucas%20Israel
 
 ## Listando NOTAS do negociador em uma disputa
 
 Permite listar as notas do negociador em uma disputa.
-URL: GET https://api.justto.app/api/disputes/{dispute-id}/occurrences/type/NOTE
+URL: GET https://backend.justto.app/api/disputes/{dispute-id}/occurrences/type/NOTE
 
 ## Listando COMUNICAÇÕES em uma disputa
 
@@ -430,7 +430,7 @@ Permite listar todas as comunicações de uma disputa. Tanto o envio de mensagem
 Tudo fica centralizado, independente do meio de comunicação (SMS, Whatsapp, email).
 Também lista qualquer contraproposta realizada nos sistemas da JUSTTO.
 
-URL: https://api.justto.app/api/disputes/{dispute-id}/occurrences/type/INTERACTION?size=20&sort=createdAt,desc&sort=id,desc
+URL: https://backend.justto.app/api/disputes/{dispute-id}/occurrences/type/INTERACTION?size=20&sort=createdAt,desc&sort=id,desc
 
 ## Documentação dos tipos de dados e suas obrigatoriedades
 

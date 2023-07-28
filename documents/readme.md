@@ -9,7 +9,7 @@ Para enviar o documento PDF como minuta e solicitar ao sistema que faça a gest�
 
 Verbo da API: `POST`
 
-URL da API: `https://api.justto.app/api/office/documents/dispute/{disputeId}/sign/external-term`
+URL da API: `https://backend.justto.app/api/office/documents/dispute/{disputeId}/sign/external-term`
 
 Note que a URL é formada pelo ID interno da disputa na JUSTTO.
 
