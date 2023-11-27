@@ -1,4 +1,4 @@
-# Integração JUSTTO - Webhook padrão da JUSTTO
+# Integração Projuris Acordos - Webhook padrão da Projuris Acordos
 
 > Se você estiver procurando a documentação da API de importação, vá para o [documento principal](../readme.md).
 
@@ -13,7 +13,7 @@ Você escolhe o que é interessante pra você processar com os dados que chegam,
 Documenta as classes que enviamos no webhook
 
 ### DisputeVM
-Representa uma disputa no sistema da JUSTTO
+Representa uma disputa no sistema da Projuris Acordos
 
 | **Atributo**                      | **Mandatório** | **Tipo**                                            | **Descrição**                                                                                                                                                                                                                                                                                                    |
 | --------------------------------- | -------------- | --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -42,7 +42,7 @@ Representa uma disputa no sistema da JUSTTO
 | firstClaimantLawyerStatus         | Sim            | ONLINE/OFFLINE                                      | Indica se o advogado da parte contrária está interagindo com a plataforma no exato momento                                                                                                                                                                                                                       |
 | hasDocument                       | Sim            | Booleano                                            | Indica se existe minuta gerada para formalizar o acordo. Quando criar a minuta, esta flag já irá vir true, indicando que existe um documento mesmo que este ainda não foi pra assinatura. O status de assinatura do documento está disponível no atributo signStatus                                             |
 | hasOBFInStrategy                  | Sim            | Boolean                                             | Indica se a estratégia da disputa possui 'Obrigação de Fazer'                                                                                                                                                                                                                                                    |
-| id                                | Sim            | Numérico                                            | Identificação interna única da disputa na JUSTTO                                                                                                                                                                                                                                                                 |
+| id                                | Sim            | Numérico                                            | Identificação interna única da disputa na Projuris Acordos                                                                                                                                                                                                                                                                 |
 | isMy                              | Sim            | Booleano                                            | Indica se a disputa pertence ao usuário logado. Só é utilizado quando consulta a disputa via API. Ao consultar via API, se o usuário que fizer a requisição for o negociador/mediador da disputa, esta flag irá vir true                                                                                         |
 | lastCounterOfferName              | Não            | Alfanumérico                                        | Nome do responsável por realizar a última contra proposta na disputa                                                                                                                                                                                                                                             |
 | lastCounterOfferValue             | Não            | Numérico                                            | Valor da última contra proposta realizada na disputa                                                                                                                                                                                                                                                             |
@@ -96,8 +96,8 @@ Contas bancárias associadas na disputa para realizar o depósito do valor acord
 Interessante documentar que ter contas bancárias associadas não representa que a disputa teve acordo. Muitos casos, os dados bancários são associados enquanto ocorre a negociação
 | **Atributo** | **Mandatório** | **Tipo**                            | **Descrição**                                                                       |
 | ------------ | -------------- | ----------------------------------- | ----------------------------------------------------------------------------------- |
-| id           | Sim            | Numérico                            | Indica o id interno da conta bancária nos cadastros da JUSTTO                       |
-| personID     | Sim            | Numérico                            | Indica o id da pessoa que possui a conta bancária associada nos cadastros da JUSTTO |
+| id           | Sim            | Numérico                            | Indica o id interno da conta bancária nos cadastros da Projuris Acordos                       |
+| personID     | Sim            | Numérico                            | Indica o id da pessoa que possui a conta bancária associada nos cadastros da Projuris Acordos |
 | name         | Sim            | Alfanumérico                        | Nome da pessoa para depósito                                                        |
 | document     | Sim            | Alfanumérico                        | CPF/CNPJ para realizar o depósito                                                   |
 | email        | Sim            | Alfanumérico                        | Email do responsável pela conta                                                     |
@@ -110,7 +110,7 @@ Interessante documentar que ter contas bancárias associadas não representa que
 Representa uma interação na disputa
 | **Atributo** | **Mandatório** | **Tipo**                                                    | **Descrição**                                                                                                                                                                     |
 | ------------ | -------------- | ----------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| id           | Sim            | Numérico                                                    | Identificação única da interação no sistema da JUSTTO                                                                                                                             |
+| id           | Sim            | Numérico                                                    | Identificação única da interação no sistema da Projuris Acordos                                                                                                                             |
 | createdAt    | Sim            | Data hora                                                   | Representa a data e hora que foi criado                                                                                                                                           |
 | properties   | Não            | Mapa chave/valor                                            | Representa propriedades da interação. São metadados adicionais da interação. As chaves disponíveis estão documentadas no enum [InteractionPropertyType](#InteractionPropertyType) |
 | message      | Não            | [InteractionCommunicationDto](#InteractionCommunicationDto) | Representa a mensagem recebida ou enviada na interação, no caso de interação do tipo COMMUNICATION                                                                                |
@@ -119,7 +119,7 @@ Representa uma interação na disputa
 Representa uma interação na disputa
 | **Atributo**      | **Mandatório** | **Tipo**                                                  | **Descrição**                                                                                                                                                                        |
 | ----------------- | -------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| id                | Sim            | Numérico                                                  | Identificação única da interação no sistema da JUSTTO                                                                                                                                |
+| id                | Sim            | Numérico                                                  | Identificação única da interação no sistema da Projuris Acordos                                                                                                                                |
 | createdAt         | Sim            | Data hora                                                 | Representa a data e hora que foi criado                                                                                                                                              |
 | parameters        | Sim            | Mapa chave/valor                                          | Possui valores de metadados referentes a mensagem recebida ou enviada. Os metadados disponíveis estão documentados na enum [CommunicationParameterType](#CommunicationParameterType) |
 | receiver          | Sim            | Alfanumérico                                              | Informa o endereo de quem vai receber a mensagem. Ex: No caso do email, o destinatário. No caso de uma mensagem WhatsApp o número que vai receber a mensagem.                        |
@@ -138,24 +138,24 @@ Representa uma interação na disputa
 Representa a campanha da disputa
 | **Atributo**                  | **Mandatório** | **Tipo**     | **Descrição**                                                                                                                                                                                                                                     |
 | ----------------------------- | -------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| id                            | Sim            | Numérico     | Identificação única da interação no sistema da JUSTTO                                                                                                                                                                                             |
+| id                            | Sim            | Numérico     | Identificação única da interação no sistema da Projuris Acordos                                                                                                                                                                                             |
 | createdAt                     | Sim            | Data hora    | Representa a data e hora que foi criado                                                                                                                                                                                                           |
-| alwaysContactParty            | Sim            | Booleano     | Indica que a JUSTTO sempre deve contatar o autor. Mesmo se tiver advogado, a JUSTTO irá agendar mensagens automáticas para serem enviadas para a parte contrária                                                                                  |
+| alwaysContactParty            | Sim            | Booleano     | Indica que a Projuris Acordos sempre deve contatar o autor. Mesmo se tiver advogado, a Projuris Acordos irá agendar mensagens automáticas para serem enviadas para a parte contrária                                                                                  |
 | businessHoursEngagement       | Sim            | Booleano     | Indica todas as mensagens automáticas serão agendadas para envio dentro de horário comercial. (De segunda a quinta das 8-19hs. Sexta das 8-18hs)                                                                                                  |
-| contactPartyWhenInvalidLawyer | Sim            | Booleano     | Indica que a JUSTTO pode contatar a parte contrária quando seu advogado não possuir dados de contato e não conseguirmos contato com ele. Ex: em disputas onde o advogado está sem email/telefone, a plataforma irá agendar mensagens para o autor |
-| contactPartyWhenNoLawyer      | Sim            | Booleano     | Indica que a JUSTTO pode contatar a parte contrária quando não tiver advogados na disputa                                                                                                                                                         |
+| contactPartyWhenInvalidLawyer | Sim            | Booleano     | Indica que a Projuris Acordos pode contatar a parte contrária quando seu advogado não possuir dados de contato e não conseguirmos contato com ele. Ex: em disputas onde o advogado está sem email/telefone, a plataforma irá agendar mensagens para o autor |
+| contactPartyWhenNoLawyer      | Sim            | Booleano     | Indica que a Projuris Acordos pode contatar a parte contrária quando não tiver advogados na disputa                                                                                                                                                         |
 | deadline                      | Sim            | Data hora    | A data limite que a plataforma irá negociar as disputas. Pode ser sobrescrito em cada disputa da campanha.                                                                                                                                        |
-| denySavingDeposit             | Sim            | Boolean      | Indica que a JUSTTO não deve aceitar conta poupança para depósito de acordos da campanha                                                                                                                                                          |
+| denySavingDeposit             | Sim            | Boolean      | Indica que a Projuris Acordos não deve aceitar conta poupança para depósito de acordos da campanha                                                                                                                                                          |
 | initialOfferPercentage        | Sim            | Numérico     | Indica o percentual da primeira proposta referente a alçada máxima                                                                                                                                                                                |
 | name                          | Sim            | Alfanumérico | Indica o da campanha                                                                                                                                                                                                                              |
-| skipEnrichment                | Sim            | Booleano     | Flag indica se quem importou solicitou que a JUSTTO enriqueça os dados automaticamente                                                                                                                                                            |
+| skipEnrichment                | Sim            | Booleano     | Flag indica se quem importou solicitou que a Projuris Acordos enriqueça os dados automaticamente                                                                                                                                                            |
 
 
 ### WorkspaceDto
 Representa a workspace da disputa
 | **Atributo**                  | **Mandatório** | **Tipo**     | **Descrição**                                                                                                                                                                                                                                     |
 | ----------------------------- | -------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| id                            | Sim            | Numérico     | Identificação única da interação no sistema da JUSTTO                                                                                                                                                                                             |
+| id                            | Sim            | Numérico     | Identificação única da interação no sistema da Projuris Acordos                                                                                                                                                                                             |
 | name                          | Sim            | Alfanumérico | Indica o nome da workspace                                                                                                                                                                                                                        |
 | teamName                      | Sim            | Alfanumérico | Indica o nome to time da workspace                                                                                                                                                                                                                |
 | subDomain                     | Sim            | Alfanumérico | Indica o código único para o domínio da workspace                                                                                                                                                                                                 |
@@ -164,27 +164,27 @@ Representa a workspace da disputa
 
 
 ### PhoneDto
-Representa um cadastro de telefone no sistema JUSTTO
+Representa um cadastro de telefone no sistema Projuris Acordos
 | **Atributo** | **Mandatório** | **Tipo**     | **Descrição**                                         |
 | ------------ | -------------- | ------------ | ----------------------------------------------------- |
-| id           | Sim            | Numérico     | Identificação única da interação no sistema da JUSTTO |
+| id           | Sim            | Numérico     | Identificação única da interação no sistema da Projuris Acordos |
 | createdAt    | Sim            | Data hora    | Representa a data e hora que foi criado               |
 | number       | Sim            | Alfanumérico | Representa o número de telefone                       |
 | isMobile     | Sim            | Booleano     | Indica se o número é um número de celular ou fixo     |
 
 ### EmailDto
-Representa um cadastro de email no sistema JUSTTO
+Representa um cadastro de email no sistema Projuris Acordos
 | **Atributo** | **Mandatório** | **Tipo**     | **Descrição**                                         |
 | ------------ | -------------- | ------------ | ----------------------------------------------------- |
-| id           | Sim            | Numérico     | Identificação única da interação no sistema da JUSTTO |
+| id           | Sim            | Numérico     | Identificação única da interação no sistema da Projuris Acordos |
 | createdAt    | Sim            | Data hora    | Representa a data e hora que foi criado               |
 | address      | Sim            | Alfanumérico | Representa o endereo de email                         |
 
 ### OabDto
-Representa um cadastro de OAB no sistema JUSTTO
+Representa um cadastro de OAB no sistema Projuris Acordos
 | **Atributo** | **Mandatório** | **Tipo**                          | **Descrição**                                         |
 | ------------ | -------------- | --------------------------------- | ----------------------------------------------------- |
-| id           | Sim            | Numérico                          | Identificação única da interação no sistema da JUSTTO |
+| id           | Sim            | Numérico                          | Identificação única da interação no sistema da Projuris Acordos |
 | createdAt    | Sim            | Data hora                         | Representa a data e hora que foi criado               |
 | number       | Sim            | Alfanumérico                      | Representa o número da inscrição da OAB               |
 | state        | Sim            | [BrazilianState](#BrazilianState) | Representa o estado (UF) da OAB - A seccional         |
@@ -194,15 +194,15 @@ Representa um cadastro de OAB no sistema JUSTTO
 Representa um participante da disputa
 | **Atributo**       | **Mandatório** | **Tipo**                                     | **Descrição**                                                                                                                                   |
 | ------------------ | -------------- | -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| id                 | Sim            | Numérico                                     | Identificação única da interação no sistema da JUSTTO                                                                                           |
+| id                 | Sim            | Numérico                                     | Identificação única da interação no sistema da Projuris Acordos                                                                                           |
 | createdAt          | Sim            | Data hora                                    | Representa a data e hora que foi criado                                                                                                         |
 | birthday           | Não            | Data                                         | Representa data de nascimento da pessoa                                                                                                         |
 | dead               | Sim            | Boolean                                      | Flag indicando possível óbito do participante                                                                                                   |
-| disputeId          | Sim            | Numérico                                     | Identificação única da disputa na JUSTTO                                                                                                        |
+| disputeId          | Sim            | Numérico                                     | Identificação única da disputa na Projuris Acordos                                                                                                        |
 | documentNumber     | Não            | Alfanumérico                                 | CPF/CNPJ do participante da disputa                                                                                                             |
 | name               | Sim            | Alfanumérico                                 | Nome do participante da disputa                                                                                                                 |
 | namesake           | Sim            | Boolean                                      | Indica se o participante é um homônimo. Quando possuir um CPF, esta flag deixa de ser útil                                                      |
-| online             | Sim            | Boolean                                      | Indica se o participante está online no portal de negociações da JUSTTO                                                                         |
+| online             | Sim            | Boolean                                      | Indica se o participante está online no portal de negociações da Projuris Acordos                                                                         |
 | personId           | Sim            | Numérico                                     | Indica a identificação única do cadastro da pessoa na workspace. Note que uma mesma pessoa pode pertencer a mais de uma disputa                 |
 | roleNameLawyer     | Sim            | Boolean                                      | Flag indicando se o participante é um advogado. Isto significa que possui a role associada como LAWYER. Utilitário.                             |
 | roleNameNegotiator | Sim            | Boolean                                      | Flag indicando se o participante é o negociador/mediador na disputa. Isto significa que possui a role associada como NEGOTIATOR. Utilitário.    |
@@ -230,11 +230,11 @@ Enum representa o status de assinatura da minuta gerada. Quando existe documento
 | CANCELED  | Indica que o documento teve a assinatura cancelada. Documento não está mais disponível.                            |
 
 ### DisputeStatus
-Enum representa o status da disputa na plataforma da JUSTTO.
+Enum representa o status da disputa na plataforma da Projuris Acordos.
 | **valor**       | **Descrição**                                                                                                                                                                                                                                                 |
 | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| IMPORTED        | Status temporário da disputa. A disputa só fica neste status quando acaba de ser importada. É o primeiro status da disputa na JUSTTO.                                                                                                                         |
-| ENRICHED        | Indica que a disputa foi enriquecida pelo sistema da JUSTTO.                                                                                                                                                                                                  |
+| IMPORTED        | Status temporário da disputa. A disputa só fica neste status quando acaba de ser importada. É o primeiro status da disputa na Projuris Acordos.                                                                                                                         |
+| ENRICHED        | Indica que a disputa foi enriquecida pelo sistema da Projuris Acordos.                                                                                                                                                                                                  |
 | ENGAGEMENT      | Indica que a disputa agendou mensagens automáticas para convidar as partes para negociar                                                                                                                                                                      |
 | RUNNING         | Indica que a disputa entrou em negociação. Isto acontece quando ocorre uma interação da parte na disputa.                                                                                                                                                     |
 | PENDING         | Indica que o sistema tentou agendar mensagens para convidar as partes para negociar, mas não conseguiu. A disputa está pendente de análise manual. Isto ocorre quando não temos dados de contatos disponíveis, por exemplo.                                   |
@@ -259,7 +259,7 @@ Enum que representa a polaridade de um participante da disputa
 | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | RESPONDENT | Participante da disputa atua no polo passivo (réu)                                                                                          |
 | CLAIMANT   | Participante da disputa atua no polo ativo (parte contrária)                                                                                |
-| UNKNOWN    | Sistema da JUSTTO não conseguiu definir a polaridade da parte. Isto acontece porque alguns tribunais não fornecem estes dados para consulta |
+| UNKNOWN    | Sistema da Projuris Acordos não conseguiu definir a polaridade da parte. Isto acontece porque alguns tribunais não fornecem estes dados para consulta |
 
 ### PersonType
 Enum que representa o tipo de pessoa
@@ -297,15 +297,15 @@ Enum que representa o tipo de conteúdo de uma mensagem
 
 
 ### CommunicationMessageStatus
-Enum que representa o status de uma mensagem no sistema da JUSTTO
+Enum que representa o status de uma mensagem no sistema da Projuris Acordos
 | **valor**         | **Descrição**                                                                                                                                                                                                                                                                                                |
 | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | WAITING           | Indica que a mensagem está aguardando o horário de envio. Ocorre em mensagens que são agendadas para serem enviadas.                                                                                                                                                                                         |
 | PROCESSED         | Indica que a mensagem foi enviada. Este status é específico para mensagens automáticas, que são agendadas (ficam em WAITING) e quando chegam o horário do agendamento são enviadas. Também é o status de mensagens recebidas pelo sistema.                                                                   |
 | PROCESSED_BY_USER | Indica que a mensagem foi enviada manualmente. Um negociador/mediador enviou uma mensagem manualmente para um determinado email/telefone                                                                                                                                                                     |
-| FAILED            | Indica que a JUSTTO recebeu um erro ao tentar realizar o envio da mensagem. Geralmente ocorre devido a emails/números inválidos. Após o envio (PROCESSED), o provedor de emails ou o facebook(whatsapp) nos informa que o endereço é inválido, então a mensagem muda para o status de falha.                 |
+| FAILED            | Indica que a Projuris Acordos recebeu um erro ao tentar realizar o envio da mensagem. Geralmente ocorre devido a emails/números inválidos. Após o envio (PROCESSED), o provedor de emails ou o facebook(whatsapp) nos informa que o endereço é inválido, então a mensagem muda para o status de falha.                 |
 | CANCELED          | Indica que a mensagem foi cancelada. Isto acontece com mensagens agendadas. Quando a negociaão é iniciada, as mensagens de convite de negociação que estão agendadas são todas canceladas                                                                                                                    |
-| RETRYING          | Status temporário. Indica que o sistema da JUSTTO está tentando reenviar uma mensagem que entrou em falha. Isto normalmente acontece com serviços do WhatsApp, onde alguns números estão cadastrados sem o nono dígito - Quando detectado pelo facebook, nós tentamos reenviar a mensagem com o nono dígito. |
+| RETRYING          | Status temporário. Indica que o sistema da Projuris Acordos está tentando reenviar uma mensagem que entrou em falha. Isto normalmente acontece com serviços do WhatsApp, onde alguns números estão cadastrados sem o nono dígito - Quando detectado pelo facebook, nós tentamos reenviar a mensagem com o nono dígito. |
 
 ### InteractionType
 Enum que representa os tipos de interações possíveis
