@@ -1,10 +1,10 @@
-# Integração JUSTTO - Importação de novos processos
+# Integração Projuris Acordos - Importação de novos processos
 
 > Se você estiver procurando a documentação do webhook, vá para a [documentação de webhook padrão](webhook-padrao/README.md).
 
 ## Importação
 
-A importação de novos processos no sistema JUSTTO pode ocorrer de duas maneiras. Por API ou envio de mensagens JMS.
+A importação de novos processos no sistema Projuris Acordos pode ocorrer de duas maneiras. Por API ou envio de mensagens JMS.
 Nas duas abordagens, o conteúdo utilizado é o mesmo. Um JSON com os processos.
 
 A representação do domínio de payload das APIs estão disponíveis no diagrama de classe:
@@ -172,7 +172,7 @@ Exemplo de retorno:
 ```
 
 Para cada objeto retornado, é um acesso em uma workspace que o usuário possui.
-O nome da Workspace (já conhecido pelo usuário da JUSTTO. O que aparece para selecionar quando faz o login), é o atributo `workspace.teamName`
+O nome da Workspace (já conhecido pelo usuário da Projuris Acordos. O que aparece para selecionar quando faz o login), é o atributo `workspace.teamName`
 Na API, para identificar uma workspace, o que precisa ser enviado é `workspace.subDomain`
 
 ### Listando usuários da workspaces
@@ -357,7 +357,7 @@ Permite filtrar disputas com intervalo de datas limites para negociar.
 
 Intervalo de datas deve ser informado nos parâmetros iniciais e finais.
 expirationDateStart e expirationDateEnd
-Deve ser inviado no formato padrão de datas do sistema JUSTTO, que é em UTC, no formato "yyyy-MM-dd'T'HH:mm:ss'Z'"
+Deve ser inviado no formato padrão de datas do sistema Projuris Acordos, que é em UTC, no formato "yyyy-MM-dd'T'HH:mm:ss'Z'"
 
 Exemplo de URL: https://backend.justto.app/api/disputes/filter?expirationDateStart=2020-02-14T00:00:00Z&expirationDateEnd=2020-02-15T23:59:59Z
 
@@ -367,7 +367,7 @@ Permite filtrar disputas com intervalo de datas que foram importadas no sistema
 
 Intervalo de datas deve ser informado nos parâmetros iniciais e finais.
 importingDateStart e importingDateEnd
-Deve ser inviado no formato padrão de datas do sistema JUSTTO, que é em UTC, no formato "yyyy-MM-dd'T'HH:mm:ss'Z'"
+Deve ser inviado no formato padrão de datas do sistema Projuris Acordos, que é em UTC, no formato "yyyy-MM-dd'T'HH:mm:ss'Z'"
 
 Exemplo de URL: https://backend.justto.app/api/disputes/filter?importingDateStart=2020-02-14T00:00:00Z&importingDateEnd=2020-02-15T23:59:59Z
 
@@ -422,7 +422,7 @@ URL: GET https://backend.justto.app/api/disputes/{dispute-id}/occurrences/type/N
 
 Permite listar todas as comunicações de uma disputa. Tanto o envio de mensagem do negociador para a parte ou advogado quando o recebimento de mensagens de todas as partes.
 Tudo fica centralizado, independente do meio de comunicação (SMS, Whatsapp, email).
-Também lista qualquer contraproposta realizada nos sistemas da JUSTTO.
+Também lista qualquer contraproposta realizada nos sistemas da Projuris Acordos.
 
 URL: https://backend.justto.app/api/disputes/{dispute-id}/occurrences/type/INTERACTION?size=20&sort=createdAt,desc&sort=id,desc
 
@@ -436,16 +436,16 @@ Representa um lote de processos
 
 | **Atributo**               | **Mandatório** | **Tipo**                           | **Descrição**                                                                                                                                                                                                                                                                               |
 | -------------------------- | -------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| observacao                 | Não            | Alfanumérico (100.000)             | Campo texto livre para entrada de observações. As observações adicionadas neste campo, serão adicionadas como "NOTAS" da disputa dentro da plataforma JUSTTO                                                                                                                                |
+| observacao                 | Não            | Alfanumérico (100.000)             | Campo texto livre para entrada de observações. As observações adicionadas neste campo, serão adicionadas como "NOTAS" da disputa dentro da plataforma Projuris Acordos                                                                                                                                |
 | alcadaMaxima               | Sim            | Inteiro (valor máximo: 2147483647) | O valor da alçada máxima que será aplicada para todos os processos do lote que não tenha especificado individualmente este atributo. Este valor é dado em centavos de reais. ex: R$ 2,43 => deve ser representado como 243                                                                  |
 | documentoUsuario           | Sim            | Alfanumérico (20)                  | O CPF/CNPJ do usuário que está solicitando a criação/envio do lote de processos para ser negociado                                                                                                                                                                                          |
-| emailUsuario               | Sim            | Alfanumérico (150)                 | O email principal do usuário que está solicitando a criação/envio do lote de processos para ser negociado. Este email será utilizado para identificar o usuário no Sistema JUSTTO                                                                                                           |
+| emailUsuario               | Sim            | Alfanumérico (150)                 | O email principal do usuário que está solicitando a criação/envio do lote de processos para ser negociado. Este email será utilizado para identificar o usuário no Sistema Projuris Acordos                                                                                                           |
 | accountEmails              | Não            | Array de String                    | Lista de emails a serem distribuidos o lote de disputas                                                                                                                                                                                                                                     |
 | nomeUsuario                | Sim            | Alfanumérico (250)                 | O nome do usuário que está solicitando a criação/envio do lote de processos para ser negociado. Utilizar o subDomain da workspace para definir qual é a workspace que irá receber as disputas                                                                                               |
 | intimado                   | Sim            | Alfanumérico (250)                 | O nome do intimado no processo                                                                                                                                                                                                                                                              |
 | documentoIntimado          | Sim            | Alfanumérico (250)                 | O documento CPF/CNPJ do intimado no processo                                                                                                                                                                                                                                                |
-| processos                  | Sim            | Array de ProcessoDTO               | Lista contendo processos a serem enviados para a JUSTTO                                                                                                                                                                                                                                     |
-| estrategia                 | Não            | Numérico                           | ID da estratégia de engajamento utilizada na plataforma da JUSTTO                                                                                                                                                                                                                           |
+| processos                  | Sim            | Array de ProcessoDTO               | Lista contendo processos a serem enviados para a Projuris Acordos                                                                                                                                                                                                                                     |
+| estrategia                 | Não            | Numérico                           | ID da estratégia de engajamento utilizada na plataforma da Projuris Acordos                                                                                                                                                                                                                           |
 | campanha                   | Não            | Alfanumérico                       | Nome da campanha que irá agrupar todos os processos do lote                                                                                                                                                                                                                                 |
 | percentualPrimeiraProposta | Não            | Inteiro (entre 0 e 100)            | Representa o percentual da primeira proposta calculado a partir da alçada máxima. Somente aplicável aos casos onde não é informado o valor da primeira proposta. Quando não informado, o valor padrão é de 60%, ou seja, a primeira proposta irá com 60% do valor da alçada máxima definida |
 
@@ -463,7 +463,7 @@ Representa as configurações de comportamento que o sistema deve respeitar para
 
 ### ProcessoDTO
 
-Representa um processo que será cadastrado no sistema JUSTTO como disputa a ser negociada com as partes.
+Representa um processo que será cadastrado no sistema Projuris Acordos como disputa a ser negociada com as partes.
 
 | **Atributo**     | **Mandatório** | **Tipo**           | **Descrição**                                                                                                                                                                                                     |
 | ---------------- | -------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -483,7 +483,7 @@ Representa um processo que será cadastrado no sistema JUSTTO como disputa a ser
 
 ### ParteDTO
 
-Representa o participante de uma disputa que será cadastrado no sistema JUSTTO.
+Representa o participante de uma disputa que será cadastrado no sistema Projuris Acordos.
 
 | **Atributo**    | **Mandatório**       | **Tipo**             | **Descrição**                                                                                                                                                                                                                                                                                                                 |
 | --------------- | -------------------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
