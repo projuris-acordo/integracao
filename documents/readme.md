@@ -1,4 +1,4 @@
-# Integração JUSTTO - Documentos e anexos da disputa
+# Integração Projuris Acordos - Documentos e anexos da disputa
 
 > Se você estiver procurando a documentação da API de importação, vá para o [documento principal](../readme.md).
 
@@ -11,7 +11,7 @@ Verbo da API: `POST`
 
 URL da API: `https://backend.justto.app/api/office/documents/dispute/{disputeId}/sign/external-term`
 
-Note que a URL é formada pelo ID interno da disputa na JUSTTO.
+Note que a URL é formada pelo ID interno da disputa na Projuris Acordos.
 
 Os dados de assinantes e do endereço do arquivo PDF que será utilizado como minuta deve ser enviado no payload da request.
 
