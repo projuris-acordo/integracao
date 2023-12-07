@@ -480,6 +480,7 @@ Representa um processo que será cadastrado no sistema Projuris Acordos como dis
 | codigoExterno    | Não            | Alfanumérico (50)  | Representa a identificação do processo no sistema externo, para referências futuras                                                                                                                               |
 | observacao       | Não            | Alfanumérico (500) | Qualquer observação ou anotação que queira importar anexado no processo para ficar disponível para o negociador na plataforma                                                                                     |
 | primeiraProposta | Não            | Numérico Real      | Valor monetário da primeira proposta. Quando não informado este atributo, irá considerar o percentual da primeira proposta informado no lote de processos. Exemplo: R$ 1500,00 deve ser representado como 1500.00 |
+| emailRevisor     | Não            | Alfanumérico (250) | Representa do email do usuário com o perfil de revisor cadastrado na plataforma atribuído ao processo                                                                                                             |
 
 ### ParteDTO
 
