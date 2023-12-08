@@ -439,7 +439,6 @@ Enum que representa o estado da Workspace
 | type              | Sim            | [DisputeOccurrenceType](#DisputeOccurrenceType)  | Enum para indicar o tipo da ocorrência                                     |
 | executionDateTime | Sim            | Data Hora                                        | Representa o momento em que o evento foi gerado na plataforma              |
 | status            | Sim            | [DisputeStatus](#DisputeStatus)                  | Representa o status da disputa                                             |
-| interaction       | Não            | Booleano                                         | Não aceita deposito em conta poupança                                      |
 | properties        | Não            | Mapa                                             | Informações adicionais da ocorrência, representa por um mapa (chave/valor) |
 | interaction       | Não            | [DisputeInteractionDto](#DisputeInteractionDto)  | Representa o objeto contendo informações da interação                      |
 
