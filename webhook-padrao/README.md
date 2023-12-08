@@ -427,3 +427,17 @@ Enum que representa o estado da Workspace
 | CREATING  | Indica que a Workspace está sendo configurada                                                                      |
 | READY     | Indica que a Workspace está ativa                                                                                  |
 | DISABLED  | Indica que a Workspace está desativada                                                                             |
+
+### OccurrenceDTO
+
+
+| **Atributo**             | **Mandatório** | **Tipo**       | **Descrição**                                                                    |
+|--------------------------| -------------- |----------------|----------------------------------------------------------------------------------|
+| archived                 | Sim            | Booleano       | Indica quando a ocorrência foi arquivada/removida                                |
+| disputeId                | Sim            | Númerico       | Indica o número da disputa na plataforma                                         |
+| description              | Sim            | Alfanumérico   | Descrição da ocorrência, trazendo informações sobre o evento                     |
+| type                     | Sim            | Booleano       | Indica quando deve contatar a parte caso não tenha contato do advogado           |
+| contactPartyWhenNoLawyer | Sim            | Booleano       | Indica quando deve contatar a parte caso não localize o advogado                 |
+| courtHearingDate         | Não            | Data hora      | Data da audiência                                                                |
+| denySavingDeposit        | Sim            | Booleano       | Não aceita deposito em conta poupança                                            |
+| description              | Não            | Alfanumérico   | Descrição da disputa. Também é utilizdo para descrever obrigações de fazer (OBF) |
