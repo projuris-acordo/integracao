@@ -431,13 +431,25 @@ Enum que representa o estado da Workspace
 ### OccurrenceDTO
 
 
-| **Atributo**             | **Mandatório** | **Tipo**       | **Descrição**                                                                    |
-|--------------------------| -------------- |----------------|----------------------------------------------------------------------------------|
-| archived                 | Sim            | Booleano       | Indica quando a ocorrência foi arquivada/removida                                |
-| disputeId                | Sim            | Númerico       | Indica o número da disputa na plataforma                                         |
-| description              | Sim            | Alfanumérico   | Descrição da ocorrência, trazendo informações sobre o evento                     |
-| type                     | Sim            | Booleano       | Indica quando deve contatar a parte caso não tenha contato do advogado           |
-| contactPartyWhenNoLawyer | Sim            | Booleano       | Indica quando deve contatar a parte caso não localize o advogado                 |
-| courtHearingDate         | Não            | Data hora      | Data da audiência                                                                |
-| denySavingDeposit        | Sim            | Booleano       | Não aceita deposito em conta poupança                                            |
-| description              | Não            | Alfanumérico   | Descrição da disputa. Também é utilizdo para descrever obrigações de fazer (OBF) |
+| **Atributo**      | **Mandatório** | **Tipo**                                         | **Descrição**                                                              |
+|-------------------|----------------|--------------------------------------------------|----------------------------------------------------------------------------|
+| archived          | Sim            | Booleano                                         | Indica quando a ocorrência foi arquivada/removida                          |
+| disputeId         | Sim            | Númerico                                         | Indica o número da disputa na plataforma                                   |
+| description       | Sim            | Alfanumérico                                     | Descrição da ocorrência, trazendo informações sobre o evento               |
+| type              | Sim            | [DisputeOccurrenceType](#DisputeOccurrenceType)  | Enum para indicar o tipo da ocorrência                                     |
+| executionDateTime | Sim            | Data Hora                                        | Representa o momento em que o evento foi gerado na plataforma              |
+| status            | Sim            | [DisputeStatus](#DisputeStatus)                  | Representa o status da disputa                                             |
+| interaction       | Não            | Booleano                                         | Não aceita deposito em conta poupança                                      |
+| properties        | Não            | Mapa                                             | Informações adicionais da ocorrência, representa por um mapa (chave/valor) |
+| interaction       | Não            | [DisputeInteractionDto](#DisputeInteractionDto)  | Representa o objeto contendo informações da interação                      |
+
+### DisputeOccurrenceType
+
+| **Valor**   | **Descrição**                                |
+|-------------|----------------------------------------------|
+| INCIDENT    | Indica ocorrências que são do tipo incidente |
+| INTERACTION | Indica ocorrências que são do tipo interação |
+| NOTE        | Indica ocorrências provenientes de notas     |
+| LOG         | Indica ocorrências que são do tipo log       |
+| SUMMARY     | Indica ocorrências que são do tipo resumo    |
+| ACTION      | Indica ocorrências que são do tipo ação      |
