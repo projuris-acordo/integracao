@@ -9,6 +9,40 @@ Você escolhe o que é interessante pra você processar com os dados que chegam,
 ## Diagrama de classes representando o que você irá receber
 ![Diagrama de classe de payloads que enviaremos no seu webhook](Objeto-do-webhook-padrao.png?raw=true "Classes do payload do webhook")
 
+``
+## Envio de ocorrências
+
+Existe a possibilidade de receber as ocorrências de uma disputa. As ocorrências são as interações que ocorrem na disputa.
+
+Pode ser configurado o envio de ocorrências para um webhook específico. O envio acontecerá sempre via uma chamada POST
+no endereço configurado e no caminho "/ocorrencia". O corpo da requisição será um JSON com o classe DisputeOccurrenceDto convertida em um Map<String, Object>.
+
+Exemplo de URL que será chamada:
+
+> https://seu-webhook.com.br/ocorrencia
+
+Exemplo de JSON que será enviado:
+
+```json
+{
+  "archived": false,
+  "createdBy": "davy.fonseca@justto.com.br",
+  "disputeId": 1000,
+  "description": "Disputa dada como ganha pelo negociador Davy",
+  "id": 6000000,
+  "type": "LOG",
+  "executionDateTime": { "dateTime": "2023-12-07T14:43:09Z", "javaDate": false },
+  "createAt": { "dateTime": "2023-12-07T14:43:09Z", "javaDate": false },
+  "properties": {},
+  "status": "SETTLED"
+}
+```
+
+### Diagrama de classes das ocorrências
+
+![Diagrama de classe de payloads que enviaremos no seu webhook](Objeto-do-webhook-ocorrencia.png?raw=true "Classes do payload do webhook")
+
+
 # Classes
 Documenta as classes que enviamos no webhook
 
@@ -427,3 +461,28 @@ Enum que representa o estado da Workspace
 | CREATING  | Indica que a Workspace está sendo configurada                                                                      |
 | READY     | Indica que a Workspace está ativa                                                                                  |
 | DISABLED  | Indica que a Workspace está desativada                                                                             |
+
+### OccurrenceDTO
+
+
+| **Atributo**      | **Mandatório** | **Tipo**                                         | **Descrição**                                                              |
+|-------------------|----------------|--------------------------------------------------|----------------------------------------------------------------------------|
+| archived          | Sim            | Booleano                                         | Indica quando a ocorrência foi arquivada/removida                          |
+| disputeId         | Sim            | Númerico                                         | Indica o número da disputa na plataforma                                   |
+| description       | Sim            | Alfanumérico                                     | Descrição da ocorrência, trazendo informações sobre o evento               |
+| type              | Sim            | [DisputeOccurrenceType](#DisputeOccurrenceType)  | Enum para indicar o tipo da ocorrência                                     |
+| executionDateTime | Sim            | Data Hora                                        | Representa o momento em que o evento foi gerado na plataforma              |
+| status            | Sim            | [DisputeStatus](#DisputeStatus)                  | Representa o status da disputa                                             |
+| properties        | Não            | Mapa                                             | Informações adicionais da ocorrência, representa por um mapa (chave/valor) |
+| interaction       | Não            | [DisputeInteractionDto](#DisputeInteractionDto)  | Representa o objeto contendo informações da interação                      |
+
+### DisputeOccurrenceType
+
+| **Valor**   | **Descrição**                                |
+|-------------|----------------------------------------------|
+| INCIDENT    | Indica ocorrências que são do tipo incidente |
+| INTERACTION | Indica ocorrências que são do tipo interação |
+| NOTE        | Indica ocorrências provenientes de notas     |
+| LOG         | Indica ocorrências que são do tipo log       |
+| SUMMARY     | Indica ocorrências que são do tipo resumo    |
+| ACTION      | Indica ocorrências que são do tipo ação      |
