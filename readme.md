@@ -390,7 +390,6 @@ As disputas podem estar nos seguintes estados:
 - EXPIRED -> Indica disputa que expirou. Que atingiu a data fim de negociação
 - SETTLED -> Infica disputa que foi ganha. Negociador precisa informar este status
 - UNSETTLED -> Infica disputa que foi perdida. Negociador precisa informar este status
-- REFUSED -> Indica disputa que foi negada pela parte
 
 ### Por status da disputa
 
