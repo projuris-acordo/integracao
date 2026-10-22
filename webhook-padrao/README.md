@@ -9,7 +9,27 @@ Você escolhe o que é interessante pra você processar com os dados que chegam,
 ## Diagrama de classes representando o que você irá receber
 ![Diagrama de classe de payloads que enviaremos no seu webhook](Objeto-do-webhook-padrao.png?raw=true "Classes do payload do webhook")
 
-``
+## Como o envio funciona
+
+- **Gatilho:** qualquer alteração salva na disputa. As alterações são agrupadas e enviadas em lote a cada **~5 minutos**, sempre com o **estado completo** da disputa (não um diff). Trate o recebimento como idempotente.
+- **Janela:** só são enviadas disputas que tiveram mudança de status nos **últimos 30 dias**.
+- **Sem reenvio:** se a sua URL falhar, a disputa só volta a ser enviada na próxima alteração. Responda `2xx` rápido e processe em fila; faça uma conferência periódica pela API para cobrir falhas.
+- **Autenticação:** opcional, por **Basic** (usuário e senha cadastrados na configuração do webhook). Não há Bearer neste envio.
+- **Workspace:** o corpo não informa o workspace. Use uma URL por workspace.
+- **Datas:** campos "Data hora" chegam como objeto, em UTC: `{"dateTime": "2026-09-04T18:40:00Z", "javaDate": false}`.
+- **properties:** traz **todas** as propriedades da disputa. Em reclamações Procon/Consumidor.gov aparecem, por exemplo, `ORIGEM`, `ORGÃO`, `UF`, `CIDADE`, `DATA RECLAMAÇÃO`, `TIPO RECLAMACAO` (CIP/TNF), `TIPO PROCON` e `DATA AUDIENCIA`.
+
+### Regras do envio de ocorrências
+
+- `POST` em `{sua URL}/ocorrencia`, uma chamada por ocorrência, de **todos** os tipos (`DisputeOccurrenceType`).
+- Até **3 tentativas** em caso de falha.
+- Autenticação pelo header `Authorization` (Basic ou Bearer, conforme cadastrado).
+- `disputeId` liga a ocorrência ao `id` da disputa.
+
+### Reclamações Procon/Consumidor.gov
+
+Para o detalhe de uma reclamação Procon (partes, texto, resumo da IA, anexos, minuta, histórico de tratativas), use a API `GET https://backend.justto.app/api/disputes/v2/procon-empresas?protocolo={code}` (credencial de aplicação fornecida pelo time do Acordos). O webhook serve como aviso de que algo mudou.
+
 ## Envio de ocorrências
 
 Existe a possibilidade de receber as ocorrências de uma disputa. As ocorrências são as interações que ocorrem na disputa.
@@ -110,7 +130,7 @@ Representa uma disputa no sistema da Projuris Acordos
 | firstInteraction                  | Não            | [DisputeInteractionDto](#DisputeInteractionDto)     | A primeira interação da disputa                                                                                                                                                                                                                                                                                  |
 | lastInteraction                   | Não            | [DisputeInteractionDto](#DisputeInteractionDto)     | A última interação da disputa                                                                                                                                                                                                                                                                                    |
 | campaign                          | Sim            | [CampaignDto](#CampaignDto)                         | A campanha associada na disputa                                                                                                                                                                                                                                                                                  |
-| workspace                         | Sim            | [WorkspaceDto](#WorkspaceDto)                       | A workspace associada na disputa                                                                                                                                                                                                                                                                                  |
+| workspace                         | -              | [WorkspaceDto](#WorkspaceDto)                       | **Não é enviado no corpo do webhook.** Para saber de qual workspace veio a chamada, cadastre uma URL por workspace (ex.: `https://seu-sistema/webhooks/acordos/{cliente}`) |
 
 
 ### DisputeConclusionDto
@@ -145,7 +165,7 @@ Representa uma interação na disputa
 | **Atributo** | **Mandatório** | **Tipo**                                                    | **Descrição**                                                                                                                                                                     |
 | ------------ | -------------- | ----------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | id           | Sim            | Numérico                                                    | Identificação única da interação no sistema da Projuris Acordos                                                                                                                             |
-| createdAt    | Sim            | Data hora                                                   | Representa a data e hora que foi criado                                                                                                                                           |
+| createAt    | Sim            | Data hora                                                   | Representa a data e hora que foi criado                                                                                                                                           |
 | properties   | Não            | Mapa chave/valor                                            | Representa propriedades da interação. São metadados adicionais da interação. As chaves disponíveis estão documentadas no enum [InteractionPropertyType](#InteractionPropertyType) |
 | message      | Não            | [InteractionCommunicationDto](#InteractionCommunicationDto) | Representa a mensagem recebida ou enviada na interação, no caso de interação do tipo COMMUNICATION                                                                                |
 
@@ -154,7 +174,7 @@ Representa uma interação na disputa
 | **Atributo**      | **Mandatório** | **Tipo**                                                  | **Descrição**                                                                                                                                                                        |
 | ----------------- | -------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | id                | Sim            | Numérico                                                  | Identificação única da interação no sistema da Projuris Acordos                                                                                                                                |
-| createdAt         | Sim            | Data hora                                                 | Representa a data e hora que foi criado                                                                                                                                              |
+| createAt         | Sim            | Data hora                                                 | Representa a data e hora que foi criado                                                                                                                                              |
 | parameters        | Sim            | Mapa chave/valor                                          | Possui valores de metadados referentes a mensagem recebida ou enviada. Os metadados disponíveis estão documentados na enum [CommunicationParameterType](#CommunicationParameterType) |
 | receiver          | Sim            | Alfanumérico                                              | Informa o endereo de quem vai receber a mensagem. Ex: No caso do email, o destinatário. No caso de uma mensagem WhatsApp o número que vai receber a mensagem.                        |
 | sender            | Sim            | Alfanumérico                                              | Informa o endereo de quem mandou a mensagem. Ex: No caso de um email, que enviou o email.                                                                                            |
@@ -173,7 +193,7 @@ Representa a campanha da disputa
 | **Atributo**                  | **Mandatório** | **Tipo**     | **Descrição**                                                                                                                                                                                                                                     |
 | ----------------------------- | -------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | id                            | Sim            | Numérico     | Identificação única da interação no sistema da Projuris Acordos                                                                                                                                                                                             |
-| createdAt                     | Sim            | Data hora    | Representa a data e hora que foi criado                                                                                                                                                                                                           |
+| createAt                     | Sim            | Data hora    | Representa a data e hora que foi criado                                                                                                                                                                                                           |
 | alwaysContactParty            | Sim            | Booleano     | Indica que a Projuris Acordos sempre deve contatar o autor. Mesmo se tiver advogado, a Projuris Acordos irá agendar mensagens automáticas para serem enviadas para a parte contrária                                                                                  |
 | businessHoursEngagement       | Sim            | Booleano     | Indica todas as mensagens automáticas serão agendadas para envio dentro de horário comercial. (De segunda a quinta das 8-19hs. Sexta das 8-18hs)                                                                                                  |
 | contactPartyWhenInvalidLawyer | Sim            | Booleano     | Indica que a Projuris Acordos pode contatar a parte contrária quando seu advogado não possuir dados de contato e não conseguirmos contato com ele. Ex: em disputas onde o advogado está sem email/telefone, a plataforma irá agendar mensagens para o autor |
@@ -194,7 +214,7 @@ Representa a workspace da disputa
 | teamName                      | Sim            | Alfanumérico | Indica o nome to time da workspace                                                                                                                                                                                                                |
 | subDomain                     | Sim            | Alfanumérico | Indica o código único para o domínio da workspace                                                                                                                                                                                                 |
 | status                        | Sim            | [WoskapceStatus](#WoskapceStatus) | Identifica status atual da workspace. Os valores deste enum estão documentados logo abaixo                                                                                                                                   |
-| createdAt                     | Sim            | Data hora    | Representa a data e hora que foi criado                                                                                                                                                                                                           |
+| createAt                     | Sim            | Data hora    | Representa a data e hora que foi criado                                                                                                                                                                                                           |
 
 
 ### PhoneDto
@@ -202,7 +222,7 @@ Representa um cadastro de telefone no sistema Projuris Acordos
 | **Atributo** | **Mandatório** | **Tipo**     | **Descrição**                                         |
 | ------------ | -------------- | ------------ | ----------------------------------------------------- |
 | id           | Sim            | Numérico     | Identificação única da interação no sistema da Projuris Acordos |
-| createdAt    | Sim            | Data hora    | Representa a data e hora que foi criado               |
+| createAt    | Sim            | Data hora    | Representa a data e hora que foi criado               |
 | number       | Sim            | Alfanumérico | Representa o número de telefone                       |
 | isMobile     | Sim            | Booleano     | Indica se o número é um número de celular ou fixo     |
 
@@ -211,7 +231,7 @@ Representa um cadastro de email no sistema Projuris Acordos
 | **Atributo** | **Mandatório** | **Tipo**     | **Descrição**                                         |
 | ------------ | -------------- | ------------ | ----------------------------------------------------- |
 | id           | Sim            | Numérico     | Identificação única da interação no sistema da Projuris Acordos |
-| createdAt    | Sim            | Data hora    | Representa a data e hora que foi criado               |
+| createAt    | Sim            | Data hora    | Representa a data e hora que foi criado               |
 | address      | Sim            | Alfanumérico | Representa o endereo de email                         |
 
 ### OabDto
@@ -219,7 +239,7 @@ Representa um cadastro de OAB no sistema Projuris Acordos
 | **Atributo** | **Mandatório** | **Tipo**                          | **Descrição**                                         |
 | ------------ | -------------- | --------------------------------- | ----------------------------------------------------- |
 | id           | Sim            | Numérico                          | Identificação única da interação no sistema da Projuris Acordos |
-| createdAt    | Sim            | Data hora                         | Representa a data e hora que foi criado               |
+| createAt    | Sim            | Data hora                         | Representa a data e hora que foi criado               |
 | number       | Sim            | Alfanumérico                      | Representa o número da inscrição da OAB               |
 | state        | Sim            | [BrazilianState](#BrazilianState) | Representa o estado (UF) da OAB - A seccional         |
 
@@ -229,7 +249,7 @@ Representa um participante da disputa
 | **Atributo**       | **Mandatório** | **Tipo**                                     | **Descrição**                                                                                                                                   |
 | ------------------ | -------------- | -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | id                 | Sim            | Numérico                                     | Identificação única da interação no sistema da Projuris Acordos                                                                                           |
-| createdAt          | Sim            | Data hora                                    | Representa a data e hora que foi criado                                                                                                         |
+| createAt          | Sim            | Data hora                                    | Representa a data e hora que foi criado                                                                                                         |
 | birthday           | Não            | Data                                         | Representa data de nascimento da pessoa                                                                                                         |
 | dead               | Sim            | Boolean                                      | Flag indicando possível óbito do participante                                                                                                   |
 | disputeId          | Sim            | Numérico                                     | Identificação única da disputa na Projuris Acordos                                                                                                        |
@@ -279,6 +299,21 @@ Enum representa o status da disputa na plataforma da Projuris Acordos.
 | UNSETTLED       | Indica que o negociador/mediador sinalizou que a disputa foi finalizada como perdida. Neste caso, a negociação é infrutífera.                                                                                                                                 |
 | PRE_NEGOTIATION | Indica que a disputa ainda não entrou em negociação proque detectou alguma anomalia pré configurada. Geralmente, um processo que já tem sentença ou alguma configuração definida pela empresa (ex: não quero negociar com o advogado com uma determinada OAB) |
 | CANCELED        | Indica que a disputa teve a negociação cancelada. Este status ocorre após uma disputa entrar em pré negociação e o negociador/mediador decidir que não está apta para ser negociada.                                                                          |
+| CAPTURADO             | Módulo Procon: reclamação capturada do órgão |
+| COLETANDO_SUBSIDIOS   | Módulo Procon: coletando subsídios |
+| CONTATO_INICIADO      | Módulo Procon: contato com o consumidor iniciado |
+| AG_RETORNO_CONSUMIDOR | Módulo Procon: aguardando retorno do consumidor |
+| AG_RETORNO_NEGOCIADOR | Módulo Procon: aguardando retorno do negociador |
+| PREPARANDO_MINUTA     | Módulo Procon: preparando minuta |
+| AG_ASSINATURA         | Módulo Procon: aguardando assinatura do consumidor |
+| MINUTA_ASSINADA       | Módulo Procon: minuta assinada pelo consumidor |
+| PREPARANDO_RESPOSTA   | Módulo Procon: preparando resposta ao órgão |
+| RESPOSTA_PROTOCOLADA  | Módulo Procon: resposta protocolada no órgão |
+| PROBLEMA_RESOLVIDO    | Módulo Procon: encerrada, problema resolvido |
+| DEMANDA_IMPLOCEDENTE  | Módulo Procon: encerrada, demanda improcedente |
+| ESCLARECIMENTO_ACEITO | Módulo Procon: encerrada, esclarecimento aceito |
+| ESCALOU_PARA_MULTA    | Módulo Procon: encerrada, escalou para multa |
+| INDEFINIDO            | Módulo Procon: encerrada, indeferida |
 
 ### DisputeAlertType
 Enum que representa o tipo de alerta em um participante da disuta
